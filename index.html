@@ -324,30 +324,35 @@
     <span class="tag">// UNRELEASED SHOTS, STUDIO NIGHTS, TOUR STOPS</span>
   </div>
   <div class="contact-sheet">
-    <!-- ⚠️ Photo re-embed needed: see note at end of file -->
     <div class="frame">
       <span class="fnum">01</span>
-      <div class="caption"><h4>Live Show</h4><span class="meta">On stage</span></div>
+      <img src="images/gallery-live-crowd.jpg" alt="Kid Cxbra performing live">
+      <div class="caption"><h4>Live Show</h4><span class="meta">Crowd Energy</span></div>
     </div>
     <div class="frame">
       <span class="fnum">02</span>
-      <div class="caption"><h4>Crowd Work</h4><span class="meta">First mic</span></div>
+      <img src="images/gallery-show-night.jpg" alt="Kid Cxbra on stage with the crew">
+      <div class="caption"><h4>On Stage</h4><span class="meta">Show Night</span></div>
     </div>
     <div class="frame">
       <span class="fnum">03</span>
-      <div class="caption"><h4>Studio Session</h4><span class="meta">2026</span></div>
+      <img src="images/gallery-studio.jpg" alt="Kid Cxbra in the studio">
+      <div class="caption"><h4>Studio Session</h4><span class="meta">Grotesque Studio</span></div>
     </div>
     <div class="frame">
       <span class="fnum">04</span>
-      <div class="caption"><h4>On The Road</h4><span class="meta">2026</span></div>
+      <img src="images/gallery-street-style.jpg" alt="Kid Cxbra street style">
+      <div class="caption"><h4>Street Style</h4><span class="meta">Off Duty</span></div>
     </div>
     <div class="frame">
       <span class="fnum">05</span>
-      <div class="caption"><h4>Show Night</h4><span class="meta">Venue</span></div>
+      <img src="images/gallery-on-the-road.jpg" alt="Kid Cxbra traveling">
+      <div class="caption"><h4>On The Road</h4><span class="meta">Between Cities</span></div>
     </div>
     <div class="frame">
       <span class="fnum">06</span>
-      <div class="caption"><h4>Pull Up</h4><span class="meta">Fit check</span></div>
+      <img src="images/gallery-travels.jpg" alt="Kid Cxbra on location">
+      <div class="caption"><h4>Travels</h4><span class="meta">In Transit</span></div>
     </div>
   </div>
 </section>
@@ -360,9 +365,8 @@
     <span class="tag">// CXLD BLOODED&#8482; — LIMITED DROP</span>
   </div>
   <div class="product-grid">
-    <!-- ⚠️ Photo re-embed needed: see note at end of file -->
     <div class="product-card">
-      <div class="pimg"></div>
+      <div class="pimg"><img src="images/product-hoodie.jpg" alt="CXLD BLOODED embroidered hoodie" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
       <div class="pinfo">
         <span class="pbrand">CXLD BLOODED&#8482;</span>
         <h4>Embroidered Hoodie</h4>
@@ -373,24 +377,24 @@
       </div>
     </div>
     <div class="product-card">
-      <div class="pimg"></div>
+      <div class="pimg"><img src="images/product-sweatpants.jpg" alt="CXLD BLOODED embroidered sweatpants" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
       <div class="pinfo">
         <span class="pbrand">CXLD BLOODED&#8482;</span>
-        <h4>Zip Hoodie & Sweatpants Set</h4>
+        <h4>Embroidered Sweatpants</h4>
         <div class="prow">
-          <span class="pprice">$89.99</span>
-          <a href="https://kidcxbra.gumroad.com/l/cxldblooded-tracksuit" target="_blank" class="mini-btn buy">Buy Now</a>
+          <span class="pprice">$59.99</span>
+          <a href="https://kidcxbra.gumroad.com/l/cxldblooded-sweatpants" target="_blank" class="mini-btn buy">Buy Now</a>
         </div>
       </div>
     </div>
     <div class="product-card">
-      <div class="pimg"></div>
+      <div class="pimg"><img src="images/product-snapback.jpg" alt="CXLD BLOODED snapback cap" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
       <div class="pinfo">
         <span class="pbrand">CXLD BLOODED&#8482;</span>
-        <h4>Embroidered Beanie</h4>
+        <h4>Snapback Cap</h4>
         <div class="prow">
           <span class="pprice">$24.99</span>
-          <a href="https://kidcxbra.gumroad.com/l/cxldblooded-beanie" target="_blank" class="mini-btn buy">Buy Now</a>
+          <a href="https://kidcxbra.gumroad.com/l/cxldblooded-snapback" target="_blank" class="mini-btn buy">Buy Now</a>
         </div>
       </div>
     </div>
@@ -441,21 +445,6 @@
 <div style="text-align:center; padding:18px 20px; font-family:'JetBrains Mono',monospace; font-size:11px; color:#6a6a6a; border-top:1px solid var(--line);">
   &copy; 2026 Kid Cxbra&#8482;. All rights reserved. CXLD BLOODED&#8482; is a trademark of Kid Cxbra.
 </div>
-
-<!--
-  ⚠️ IMPORTANT — PHOTOS NOT INCLUDED IN THIS FILE
-  Your live site's gallery (6 frames) and product photos (3 items) are embedded as
-  base64 data — huge blocks of encoded text baked directly into the HTML. Retyping
-  ~250KB of that data by hand risks a single corrupted character silently breaking
-  a photo, so I deliberately left those <img> tags out rather than risk that.
-
-  Recommended fix (also fixes page load speed — base64 images bloat this file a lot):
-  1. In your GitHub repo, add an /images folder.
-  2. Upload each photo there (via Add file → Upload files).
-  3. In this file, add back each <img src="images/your-photo.jpg" alt="..."> inside
-     the empty .frame and .pimg divs where noted above.
-  This is more reliable to edit going forward than base64, too.
--->
 
 </body>
 </html>
