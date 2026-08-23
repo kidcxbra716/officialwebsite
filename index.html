@@ -6,6 +6,17 @@
 <title>KID CXBRA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- GOOGLE ANALYTICS (GA4) — required for UTM-tagged bio links to report anywhere.
+     1. Go to analytics.google.com > Admin > create a GA4 property for kidcxbra.com.
+     2. Admin > Data Streams > your web stream > copy the Measurement ID (looks like G-XXXXXXXXXX).
+     3. Replace BOTH instances of G-REPLACE_WITH_ID below with that ID. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-REPLACE_WITH_ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-REPLACE_WITH_ID');
+</script>
 <style>
   :root{
     --bg:#0d0d0d;
@@ -20,7 +31,6 @@
   html{scroll-behavior:smooth;}
   body{background:var(--bg); color:var(--cream); font-family:'Oswald',sans-serif; overflow-x:hidden;}
   .mono{font-family:'JetBrains Mono',monospace;}
-
   header{
     position:fixed; top:0; left:0; right:0; z-index:50;
     display:flex; justify-content:space-between; align-items:center;
@@ -31,7 +41,6 @@
   nav ul{list-style:none; display:flex; gap:32px;}
   nav a{color:var(--cream); text-decoration:none; font-size:13px; letter-spacing:2px; text-transform:uppercase; font-weight:500; opacity:0.85; transition:opacity .2s;}
   nav a:hover{opacity:1; color:var(--red);}
-
   .hero{
     min-height:100vh; position:relative; display:flex; align-items:center; padding:0 40px;
     background:
@@ -65,7 +74,6 @@
   .btn.solid{background:var(--red); border-color:var(--red); color:var(--cream);}
   .btn:hover{background:var(--cream); color:var(--bg); border-color:var(--cream);}
   .btn.solid:hover{background:var(--yellow); border-color:var(--yellow); color:var(--bg);}
-
   .marquee{
     background:var(--red); color:var(--bg); padding:14px 0; overflow:hidden; white-space:nowrap;
     border-top:4px solid var(--bg); border-bottom:4px solid var(--bg);
@@ -73,12 +81,10 @@
   .marquee-track{display:inline-block; animation:scroll 18s linear infinite;}
   .marquee-track span{font-weight:700; font-size:18px; margin-right:40px; text-transform:uppercase; letter-spacing:1px;}
   @keyframes scroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-
   section{padding:100px 40px;}
   .section-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:56px; border-bottom:1px solid var(--line); padding-bottom:20px; flex-wrap:wrap; gap:16px;}
   .section-head h2{font-size:clamp(32px,5vw,56px); text-transform:uppercase; letter-spacing:-1px; font-weight:700;}
   .section-head .tag{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--yellow); letter-spacing:2px;}
-
   .grid-tracks{display:grid; grid-template-columns:repeat(2,1fr); gap:20px;}
   .track-card{background:var(--panel); border:2px solid var(--red); padding:28px; transition:transform .2s;}
   .track-card:hover{transform:translate(-4px,-4px); box-shadow:6px 6px 0 var(--red);}
@@ -92,7 +98,6 @@
   .mini-btn:hover{background:var(--cream); color:var(--bg);}
   .mini-btn.buy{background:var(--yellow); border-color:var(--yellow); color:var(--bg); font-weight:600;}
   .mini-btn.buy:hover{background:var(--cream); border-color:var(--cream);}
-
   /* Behind the Music - contact sheet gallery */
   .contact-sheet{display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--line);}
   .frame{background:var(--bg); aspect-ratio:3/4; position:relative; overflow:hidden; transition:transform .3s;}
@@ -102,7 +107,6 @@
   .frame .fnum{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--red); position:absolute; top:12px; left:12px; letter-spacing:1px; background:rgba(0,0,0,0.6); padding:3px 7px;}
   .frame h4{font-size:16px; font-weight:600; text-transform:uppercase;}
   .frame .meta{font-family:'JetBrains Mono',monospace; font-size:10px; color:#c9c9c9; margin-top:4px;}
-
   .patches{display:flex; gap:24px; flex-wrap:wrap;}
   .patch{
     background:var(--cream); color:var(--bg); padding:26px; width:230px; position:relative;
@@ -124,7 +128,6 @@
   .product-card h4{font-size:20px; text-transform:uppercase; font-weight:600; margin:8px 0 14px;}
   .product-card .prow{display:flex; justify-content:space-between; align-items:center;}
   .product-card .pprice{font-family:'JetBrains Mono',monospace; font-size:14px; color:var(--cream); font-weight:500;}
-
   .book-split{display:grid; grid-template-columns:1.1fr 1fr; gap:50px; align-items:start;}
   .book-split h2{margin-bottom:20px; font-weight:700; text-transform:uppercase;}
   .book-split p{color:#d8d2c4; line-height:1.7; margin-bottom:24px; font-size:16px; font-weight:300;}
@@ -137,7 +140,6 @@
     padding:14px; margin-bottom:12px; font-family:'JetBrains Mono',monospace; font-size:13px;
   }
   .form-block input::placeholder, .form-block textarea::placeholder{color:#777;}
-
   footer{
     background:var(--red); padding:50px 40px; display:flex; justify-content:space-between;
     align-items:center; flex-wrap:wrap; gap:20px;
@@ -146,9 +148,7 @@
   footer .logo span{color:var(--cream);}
   .footer-links{display:flex; gap:26px; flex-wrap:wrap;}
   .footer-links a{color:var(--bg); font-weight:600; text-decoration:none; text-transform:uppercase; font-size:13px; letter-spacing:1px;}
-
   .shop-banner{width:100%; display:block; border-top:4px solid var(--red); border-bottom:4px solid var(--red);}
-
   /* Get The First Listen — email capture + smart-link row */
   #firstlisten{
     padding:70px 40px; background:var(--panel); border-top:2px solid var(--red); border-bottom:2px solid var(--red);
@@ -172,7 +172,6 @@
   }
   .stream-btn:hover{background:var(--cream); color:var(--bg);}
   .stream-btn svg{width:14px; height:14px; fill:currentColor;}
-
   @media(max-width:768px){
     header{padding:18px 20px;}
     nav ul{gap:14px;}
@@ -193,7 +192,6 @@
 </style>
 </head>
 <body>
-
 <header>
   <div class="logo">KID <span>CXBRA</span><sup style="font-size:10px; opacity:0.6;">&#8482;</sup></div>
   <nav>
@@ -208,7 +206,6 @@
     </ul>
   </nav>
 </header>
-
 <section class="hero">
   <div class="hero-slash"></div>
   <div class="hero-inner">
@@ -223,14 +220,12 @@
     </div>
   </div>
 </section>
-
 <div class="marquee">
   <div class="marquee-track">
     <span>★ NEW MUSIC OUT NOW</span><span>★ BOOK KID CXBRA</span><span>★ MERCH DROP LIVE</span>
     <span>★ NEW MUSIC OUT NOW</span><span>★ BOOK KID CXBRA</span><span>★ MERCH DROP LIVE</span>
   </div>
 </div>
-
 <section id="about" style="max-width:900px; margin:0 auto;">
   <div class="section-head">
     <h2 style="font-size:clamp(28px,4vw,44px);">About</h2>
@@ -241,7 +236,11 @@
     <br><br>
     The catalog runs deep — 67 releases and counting, past 1,270,918 streams — spanning albums like <em>ROTY</em>, <em>ME!</em>, <em>CXBRAWRLD</em>, <em>Project X</em>, and <em>Sociopath</em>. Recent singles <em>fine wine</em>, <em>Bankroll304</em>, and <em>Everywhere</em> keep pushing the sound further.
     <br><br>
-    Off the mic, Kid Cxbra runs CXLD BLOODED&#8482; and CXB&#8482; — two streetwear lines built with the same "move different, drop fear none" energy as the music. This is more than a music career. It's a movement.
+    Off the mic, Kid Cxbra runs CXLD BLOODED&#8482; and CXB&#8482; — two streetwear lines built with the same "move different, drop fear none" energy as the music.
+    <br><br>
+    <!-- FOUNDING YEAR — fill in both brackets, then delete this comment.
+         Matches the ready copy from the marketing system's Fix 02. -->
+    Kid Cxbra started releasing music independently out of Philadelphia in [YEAR]. CXB&#8482; Group formed to house the music and the apparel under one mark in [YEAR].
   </p>
   <div class="stat-row">
     <div class="stat"><div class="n">67</div><div class="l">Releases</div></div>
@@ -249,21 +248,32 @@
     <div class="stat"><div class="n">PHL</div><div class="l">Home Base</div></div>
   </div>
 </section>
-
 <section id="firstlisten">
   <div class="fl-wrap">
     <h2>Get In Before It Drops</h2>
     <p>New music, unreleased tracks, and merch restocks hit your inbox first — before Spotify, before socials, before anyone else. No spam. Unsubscribe whenever.</p>
-
     <!-- KIT (ConvertKit) SIGNUP FORM
          Replace REPLACE_WITH_KIT_FORM_ID below with your real Kit form ID.
-         Find it in Kit: Grow > Landing Pages & Forms > your form > Embed > Form ID. -->
+         Find it in Kit: Grow > Landing Pages & Forms > your form > Embed > Form ID.
+
+         SMS FIELD — Kit captures the phone number as a custom field, but Kit
+         does not send text messages itself. To actually text this list you
+         need an SMS tool wired to Kit (e.g. via Zapier: Kit + Textiful /
+         SimpleTexting / Call Loop), or a standalone SMS platform. Until one
+         is connected, the phone number will sit in Kit unused — collecting
+         it now still gets you a list ready to activate later.
+         In Kit: Settings > Custom Fields > add a field named "phone_number"
+         so the input below maps to it (the name= must match exactly). -->
     <form action="https://app.kit.com/forms/REPLACE_WITH_KIT_FORM_ID/subscriptions" method="post" class="kit-form">
       <input type="email" name="email_address" placeholder="your@email.com" required aria-label="Email address">
+      <input type="tel" name="fields[phone_number]" placeholder="Phone (optional)" aria-label="Phone number" autocomplete="tel">
       <button type="submit" class="btn solid">Get Early Access</button>
     </form>
+    <label class="fl-fine" style="display:block; cursor:pointer;">
+      <input type="checkbox" name="sms_consent" style="margin-right:6px; vertical-align:middle;">
+      Text me too — msg &amp; data rates may apply, unsubscribe anytime.
+    </label>
     <div class="fl-fine">SIGN UP &rarr; GET AN UNRELEASED TRACK FREE</div>
-
     <div class="stream-row">
       <a href="https://open.spotify.com/artist/2pZWqAxzagONUAeYCGikBr" target="_blank" class="stream-btn">
         <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
@@ -284,15 +294,12 @@
     </div>
   </div>
 </section>
-
 <section id="music">
   <div class="section-head">
     <h2>Latest Drops</h2>
     <span class="tag">// STREAM FREE OR BUY THE DOWNLOAD</span>
   </div>
-
   <iframe style="border-radius:0; margin-bottom:36px; filter:grayscale(0.15);" src="https://open.spotify.com/embed/album/3xb5FhoeMmOat3UrNh0Ebh?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-
   <div class="grid-tracks">
     <div class="track-card">
       <span class="idx">LATEST · ALBUM</span>
@@ -332,7 +339,6 @@
     <a href="https://www.youtube.com/@kidcxbra9544" target="_blank" class="btn">Watch on YouTube</a>
   </div>
 </section>
-
 <section id="videos" style="padding-top:0;">
   <div class="section-head">
     <h2>Music Videos</h2>
@@ -342,7 +348,6 @@
     <iframe src="https://www.youtube.com/embed/videoseries?list=UUk9ces72ACBrVV02Q_JjS-A" title="Kid Cxbra YouTube" style="position:absolute; top:0; left:0; width:100%; height:100%;" frameborder="0" allowfullscreen loading="lazy"></iframe>
   </div>
 </section>
-
 <section id="gallery">
   <div class="section-head">
     <h2>Behind The Music</h2>
@@ -381,9 +386,7 @@
     </div>
   </div>
 </section>
-
 <img src="images/cxb-banner.png" alt="CXB — Move Different, Drop Fear None" class="shop-banner">
-
 <section id="shop">
   <div class="section-head">
     <h2>Cop The Merch</h2>
@@ -396,7 +399,7 @@
         <span class="pbrand">CXLD BLOODED&#8482;</span>
         <h4>Embroidered Hoodie</h4>
         <div class="prow">
-          <span class="pprice">$54.99</span>
+          <span class="pprice">$88.00</span>
           <a href="https://kidcxbra.gumroad.com/l/cxldblooded-hoodie" target="_blank" class="mini-btn buy">Buy Now</a>
         </div>
       </div>
@@ -407,7 +410,7 @@
         <span class="pbrand">CXLD BLOODED&#8482;</span>
         <h4>Embroidered Sweatpants</h4>
         <div class="prow">
-          <span class="pprice">$59.99</span>
+          <span class="pprice">$68.00</span>
           <a href="https://kidcxbra.gumroad.com/l/cxldblooded-sweatpants" target="_blank" class="mini-btn buy">Buy Now</a>
         </div>
       </div>
@@ -418,7 +421,7 @@
         <span class="pbrand">CXLD BLOODED&#8482;</span>
         <h4>Snapback Cap</h4>
         <div class="prow">
-          <span class="pprice">$24.99</span>
+          <span class="pprice">$30.00</span>
           <a href="https://kidcxbra.gumroad.com/l/cxldblooded-snapback" target="_blank" class="mini-btn buy">Buy Now</a>
         </div>
       </div>
@@ -429,7 +432,7 @@
         <span class="pbrand">CXLD BLOODED&#8482;</span>
         <h4>Knit Beanie</h4>
         <div class="prow">
-          <span class="pprice">$22.99</span>
+          <span class="pprice">$34.00</span>
           <a href="https://kidcxbra.gumroad.com/l/cxldblooded-beanie" target="_blank" class="mini-btn buy">Buy Now</a>
         </div>
       </div>
@@ -440,7 +443,7 @@
         <span class="pbrand">CXB&#8482; — EMBOSSED</span>
         <h4>Crewneck Sweatshirt</h4>
         <div class="prow">
-          <span class="pprice">$49.99</span>
+          <span class="pprice">$62.00</span>
           <a href="https://kidcxbra.gumroad.com/l/cxb-crewneck" target="_blank" class="mini-btn buy">Buy Now</a>
         </div>
       </div>
@@ -451,7 +454,7 @@
         <span class="pbrand">CXB&#8482; — EMBOSSED</span>
         <h4>T-Shirt</h4>
         <div class="prow">
-          <span class="pprice">$29.99</span>
+          <span class="pprice">$38.00</span>
           <a href="https://kidcxbra.gumroad.com/l/cxb-tshirt" target="_blank" class="mini-btn buy">Buy Now</a>
         </div>
       </div>
@@ -462,7 +465,7 @@
         <span class="pbrand">CXB&#8482; — EMBOSSED</span>
         <h4>Bomber Jacket</h4>
         <div class="prow">
-          <span class="pprice">$79.99</span>
+          <span class="pprice">$128.00</span>
           <a href="https://kidcxbra.gumroad.com/l/cxb-jacket" target="_blank" class="mini-btn buy">Buy Now</a>
         </div>
       </div>
@@ -473,7 +476,7 @@
         <span class="pbrand">CXB&#8482; — EMBOSSED</span>
         <h4>Pullover Hoodie</h4>
         <div class="prow">
-          <span class="pprice">$54.99</span>
+          <span class="pprice">$68.00</span>
           <a href="https://kidcxbra.gumroad.com/l/cxb-pullover" target="_blank" class="mini-btn buy">Buy Now</a>
         </div>
       </div>
@@ -483,7 +486,6 @@
     <a href="https://kidcxbra.gumroad.com" target="_blank" class="btn solid">Shop All CXLD BLOODED</a>
   </div>
 </section>
-
 <section id="book">
   <div class="book-split">
     <div>
@@ -513,7 +515,6 @@
     </div>
   </div>
 </section>
-
 <section id="tools" style="padding-top:0;">
   <div class="section-head">
     <h2 style="font-size:clamp(28px,4vw,44px);">Tools I Use</h2>
@@ -540,7 +541,6 @@
     </div>
   </div>
 </section>
-
 <footer id="contact">
   <div class="logo">KID <span>CXBRA</span><sup style="font-size:10px; opacity:0.6;">&#8482;</sup></div>
   <div class="footer-links">
@@ -548,13 +548,17 @@
     <a href="https://open.spotify.com/artist/2pZWqAxzagONUAeYCGikBr" target="_blank">Spotify</a>
     <a href="https://www.youtube.com/@kidcxbra9544" target="_blank">YouTube</a>
     <a href="https://soundcloud.com/user-26233401" target="_blank">SoundCloud</a>
+    <a href="https://www.facebook.com/profile.php?id=61592804669552" target="_blank">Facebook</a>
+    <a href="https://www.instagram.com/cxbbrand" target="_blank">Instagram</a>
     <a href="https://linktr.ee/Kidcobra716" target="_blank">Linktree</a>
     <a href="#book">Book</a>
+    <!-- PRESS KIT — upload the EPK PDF to the site (e.g. as epk.pdf in the
+         same folder as this file) and point this href at it, then unhide it. -->
+    <a href="epk.pdf" target="_blank">Press Kit</a>
   </div>
 </footer>
 <div style="text-align:center; padding:18px 20px; font-family:'JetBrains Mono',monospace; font-size:11px; color:#6a6a6a; border-top:1px solid var(--line);">
   &copy; 2026 Kid Cxbra&#8482;. All rights reserved. CXLD BLOODED&#8482; is a trademark of Kid Cxbra.
 </div>
-
 </body>
 </html>
