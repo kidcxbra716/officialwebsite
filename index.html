@@ -91,6 +91,7 @@
   .track-card .idx{font-family:'JetBrains Mono',monospace; color:var(--yellow); font-size:13px; letter-spacing:1px;}
   .track-card h3{font-size:24px; margin:10px 0; text-transform:uppercase; font-weight:600;}
   .track-card .price{color:var(--red); font-weight:600; font-family:'JetBrains Mono',monospace; font-size:13px;}
+  .track-price{font-family:'JetBrains Mono',monospace; font-size:14px; color:var(--yellow); font-weight:600; margin:-4px 0 4px;}
   .mini-btn{
     font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:1px; text-transform:uppercase;
     padding:9px 14px; border:1px solid var(--cream); color:var(--cream); text-decoration:none; transition:all .2s;
@@ -172,6 +173,56 @@
   }
   .stream-btn:hover{background:var(--cream); color:var(--bg);}
   .stream-btn svg{width:14px; height:14px; fill:currentColor;}
+  /* ===== LIVE + FAN CHAT ===== */
+  #live{padding-top:0;}
+  .live-grid{display:grid; grid-template-columns:1.15fr .85fr; gap:24px; align-items:stretch;}
+  .live-card{
+    position:relative; border:2px solid var(--red); overflow:hidden;
+    min-height:440px; display:flex; flex-direction:column; justify-content:flex-end;
+    background:#000;
+  }
+  .live-bg-video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.5;}
+  .live-bg-fallback{
+    position:absolute; inset:0;
+    background:
+      radial-gradient(circle at 25% 20%, rgba(228,35,19,.55), transparent 55%),
+      radial-gradient(circle at 78% 72%, rgba(255,201,60,.22), transparent 50%),
+      #000;
+    animation:liveGlow 6s ease-in-out infinite alternate;
+  }
+  @keyframes liveGlow{
+    0%{filter:hue-rotate(0deg) brightness(.9); transform:scale(1);}
+    100%{filter:hue-rotate(8deg) brightness(1.15); transform:scale(1.06);}
+  }
+  .live-scrim{position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.1) 0%, rgba(0,0,0,.35) 45%, rgba(13,13,13,.94) 100%);}
+  .live-badge{
+    position:absolute; top:18px; left:18px; z-index:2;
+    display:inline-flex; align-items:center; gap:7px;
+    background:var(--red); color:var(--cream); font-family:'JetBrains Mono',monospace;
+    font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; padding:7px 12px;
+  }
+  .live-dot{width:7px; height:7px; border-radius:50%; background:var(--cream); animation:liveBlink 1.4s ease-in-out infinite;}
+  @keyframes liveBlink{0%,100%{opacity:1;}50%{opacity:.25;}}
+  .live-body{position:relative; z-index:2; padding:26px;}
+  .live-title{font-size:28px; text-transform:uppercase; font-weight:700; margin-bottom:4px;}
+  .live-meta{font-family:'JetBrains Mono',monospace; font-size:12px; color:#c9c9c9; margin-bottom:18px; letter-spacing:.5px;}
+  .now-playing{
+    border:1px solid var(--line); background:rgba(26,26,26,.85);
+    padding:12px 14px; margin-bottom:16px;
+    display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+  }
+  .now-playing-label{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:2px; color:var(--yellow); text-transform:uppercase;}
+  .now-playing-song{font-size:16px; margin-top:2px;}
+  .live-ctas{display:flex; flex-wrap:wrap; gap:12px;}
+  .ticket-note{font-family:'JetBrains Mono',monospace; font-size:11px; color:#8a8a8a; margin-top:10px;}
+  .chat-card{border:2px solid var(--line); display:flex; flex-direction:column; background:var(--panel); min-height:440px;}
+  .chat-head{padding:18px 20px; border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between;}
+  .chat-head h3{font-size:16px; text-transform:uppercase; letter-spacing:1px; font-weight:600;}
+  .chat-count{font-family:'JetBrains Mono',monospace; font-size:10px; color:#8a8a8a; letter-spacing:1px; text-transform:uppercase;}
+  .chat-body{flex:1;}
+  .chat-body iframe, .chat-body > div{width:100%; height:100%; min-height:380px; border:0;}
+  .chat-fallback{padding:26px 20px; color:#8a8a8a; font-family:'JetBrains Mono',monospace; font-size:12px; line-height:1.7;}
+  @media(max-width:900px){ .live-grid{grid-template-columns:1fr;} }
   @media(max-width:768px){
     header{padding:18px 20px;}
     nav ul{gap:14px;}
@@ -197,6 +248,7 @@
   <nav>
     <ul>
       <li><a href="#music">Music</a></li>
+      <li><a href="#live">Live</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#gallery">Gallery</a></li>
       <li><a href="#book">Book</a></li>
@@ -304,6 +356,8 @@
     <div class="track-card">
       <span class="idx">LATEST · ALBUM</span>
       <h3>ROTY</h3>
+      <!-- // EDIT ME — set your real Gumroad price for this album -->
+      <div class="track-price">$6.99</div>
       <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
         <a href="https://open.spotify.com/album/3xb5FhoeMmOat3UrNh0Ebh" target="_blank" class="mini-btn">Stream Free</a>
         <a href="https://kidcxbra.gumroad.com/l/roty" target="_blank" class="mini-btn buy">Buy Download</a>
@@ -312,6 +366,8 @@
     <div class="track-card">
       <span class="idx">SINGLE</span>
       <h3>fine wine</h3>
+      <!-- // EDIT ME — set your real Gumroad price for this single -->
+      <div class="track-price">$1.99</div>
       <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
         <a href="https://open.spotify.com/album/1h3PpI6UOTwnhlHkJNVrIV" target="_blank" class="mini-btn">Stream Free</a>
         <a href="https://kidcxbra.gumroad.com/l/finewine" target="_blank" class="mini-btn buy">Buy Download</a>
@@ -320,6 +376,8 @@
     <div class="track-card">
       <span class="idx">SINGLE</span>
       <h3>Bankroll304</h3>
+      <!-- // EDIT ME — set your real Gumroad price for this single -->
+      <div class="track-price">$1.99</div>
       <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
         <a href="https://open.spotify.com/album/1anLx0cI4SGuuv4AHfJER7" target="_blank" class="mini-btn">Stream Free</a>
         <a href="https://kidcxbra.gumroad.com/l/bankroll304" target="_blank" class="mini-btn buy">Buy Download</a>
@@ -328,6 +386,8 @@
     <div class="track-card">
       <span class="idx">SINGLE</span>
       <h3>No drank</h3>
+      <!-- // EDIT ME — set your real Gumroad price for this single -->
+      <div class="track-price">$1.99</div>
       <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
         <a href="https://open.spotify.com/album/3UpyN05GfL1lv4R42qXh3V" target="_blank" class="mini-btn">Stream Free</a>
         <a href="https://kidcxbra.gumroad.com/l/nodrank" target="_blank" class="mini-btn buy">Buy Download</a>
@@ -346,6 +406,76 @@
   </div>
   <div style="position:relative; padding-bottom:42%; height:0; overflow:hidden; border:2px solid var(--red);">
     <iframe src="https://www.youtube.com/embed/videoseries?list=UUk9ces72ACBrVV02Q_JjS-A" title="Kid Cxbra YouTube" style="position:absolute; top:0; left:0; width:100%; height:100%;" frameborder="0" allowfullscreen loading="lazy"></iframe>
+  </div>
+</section>
+<section id="live">
+  <div class="section-head">
+    <h2>Kid Cxbra Live</h2>
+    <span class="tag">// TICKETED STREAMS &amp; FAN CHAT</span>
+  </div>
+  <div class="live-grid">
+    <!-- LIVE / WATCH CARD -->
+    <div class="live-card">
+      <!-- // EDIT ME — drop a real looping clip here (mp4, muted, silent b-roll works great).
+           Uncomment the <source> line once you have one; until then the
+           animated red/yellow glow below plays automatically as a fallback. -->
+      <video class="live-bg-video" autoplay muted loop playsinline poster="images/gallery-live-crowd.jpg">
+        <!-- <source src="images/live-loop.mp4" type="video/mp4"> -->
+      </video>
+      <div class="live-bg-fallback"></div>
+      <div class="live-scrim"></div>
+
+      <!-- // EDIT ME — swap to "NEXT LIVE" + a date when you're offline -->
+      <span class="live-badge"><span class="live-dot"></span> Live</span>
+
+      <div class="live-body">
+        <div class="live-title">Studio Session — Live</div>
+        <div class="live-meta">FREE FOR THE EMAIL LIST · PHILADELPHIA, PA</div>
+
+        <div class="now-playing">
+          <div>
+            <div class="now-playing-label">Now Playing</div>
+            <div class="now-playing-song">fine wine</div>
+          </div>
+          <a href="https://kidcxbra.gumroad.com/l/finewine" target="_blank" class="mini-btn buy">Buy This Song</a>
+        </div>
+
+        <div class="live-ctas">
+          <!-- // EDIT ME — point this at your real live URL (YouTube Live / Instagram Live / Twitch) -->
+          <a href="https://www.youtube.com/@kidcxbra9544/live" target="_blank" class="btn solid">Watch Live — $5 Ticket</a>
+        </div>
+        <div class="ticket-note">On the email list? You're already in — check your inbox for the free link.</div>
+      </div>
+    </div>
+
+    <!-- FAN CHAT -->
+    <div class="chat-card">
+      <div class="chat-head">
+        <h3>Fan Chat</h3>
+        <span class="chat-count">Live during streams</span>
+      </div>
+      <div class="chat-body">
+        <!--
+          // EDIT ME — free group chat via Chatango:
+          1. Create a free group at chatango.com (2 minutes, no coding)
+          2. Replace "kidcxbrafans" below with your real group handle
+          3. Delete the .chat-fallback div once it's live
+        -->
+        <div id="chatango-widget"></div>
+        <script
+          id="cid_kidcxbra_chat"
+          data-cfasync="false"
+          async
+          src="https://st.chatango.com/js/gz/emb.js"
+          style="width:100%; height:100%;">
+          { "handle":"kidcxbrafans","arch":"js","styles":{"a":"e42313","b":100,"c":"0d0d0d","d":"e42313","k":"f5f0e6","l":"e42313","m":"f5f0e6","p":"10","q":"f5f0e6","t":0,"fwtickm":1} }
+        </script>
+        <div class="chat-fallback">
+          Fan chat loads once your Chatango group is live — swap "kidcxbrafans" in the code
+          above for your real group handle from chatango.com.
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 <section id="gallery">
