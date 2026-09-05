@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="CXB Ready Release Roadmap — 118-task release planner and 12 playbooks for independent rappers. Kid Cxbra / CXB Group.">
+<title>CXB Ready Release Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+:root{
+  --black:#0A0A0A; --cement:#161616; --panel:#1F1F1F; --line:#2C2C2C; --line2:#3A3A3A;
+  --bone:#F2EFE9; --bone2:#C9C4BA; --ash:#8A8579; --gold:#D4A017; --gold2:#F0C24B; --red:#B5121B; --red2:#E0212C;
+  --ok:#3FA36B; --warn:#D4A017; --crit:#E0212C;
+  --display:'Bebas Neue','Oswald','Impact',sans-serif; --body:'Archivo','Helvetica Neue',Arial,sans-serif; --mono:'JetBrains Mono','SFMono-Regular',Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body{margin:0;background:var(--black);color:var(--bone);font-family:var(--body);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--gold)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.app{max-width:1280px;margin:0 auto;padding:0 20px 80px}
+
+/* header */
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding:28px 0 18px;border-bottom:2px solid var(--red)}
+.brand{display:flex;align-items:center;gap:16px}
+.mark{width:52px;height:52px;border:2px solid var(--gold);display:grid;place-items:center;font-family:var(--display);font-size:30px;color:var(--gold);letter-spacing:1px;position:relative;flex:none}
+.mark::after{content:"";position:absolute;inset:-6px;border:1px solid var(--line2);pointer-events:none}
+.brand h1{font-family:var(--display);font-size:44px;line-height:.9;margin:0;letter-spacing:1px;font-weight:400}
+.brand h1 span{color:var(--gold)}
+.brand .tag{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ash);margin-top:6px}
+.top-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.btn{background:transparent;border:1px solid var(--line2);color:var(--bone);padding:8px 14px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;transition:border-color .15s,background .15s;white-space:nowrap}
+.btn:hover{border-color:var(--gold);color:var(--gold2)}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:var(--black);font-weight:700}
+.btn.gold:hover{background:var(--gold2);border-color:var(--gold2);color:var(--black)}
+.btn.sm{padding:5px 10px;font-size:11px}
+.btn.danger:hover{border-color:var(--red2);color:var(--red2)}
+
+/* sync bar */
+.syncbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 0;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--ash)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ash);flex:none}
+.dot.live{background:var(--ok);box-shadow:0 0 0 3px rgba(63,163,107,.2)}
+.dot.busy{background:var(--gold)}
+.dot.err{background:var(--red2)}
+.syncbar .who{display:flex;align-items:center;gap:6px;margin-left:auto}
+.syncbar input{background:var(--cement);border:1px solid var(--line2);padding:4px 8px;color:var(--bone);font-family:var(--mono);font-size:11px;width:140px}
+.syncbar .room{color:var(--gold);letter-spacing:.08em}
+
+/* setup */
+.setup{display:grid;grid-template-columns:1.1fr 1.1fr 1.3fr .9fr 1fr auto;gap:12px;align-items:end;padding:18px 0;border-bottom:1px solid var(--line)}
+.field label{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ash);margin-bottom:5px}
+.field input,.field select,.field textarea{width:100%;background:var(--cement);border:1px solid var(--line2);padding:9px 11px;color:var(--bone);border-radius:0}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);outline:none}
+.field select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--ash) 50%),linear-gradient(135deg,var(--ash) 50%,transparent 50%);background-position:calc(100% - 16px) 50%,calc(100% - 11px) 50%;background-size:5px 5px;background-repeat:no-repeat;padding-right:30px}
+.preset{display:flex;gap:8px}
+
+/* stats */
+.stats{display:grid;grid-template-columns:2fr repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:18px 0}
+.stat{background:var(--cement);padding:14px 16px}
+.stat .k{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ash)}
+.stat .v{font-family:var(--display);font-size:34px;line-height:1;margin-top:6px;letter-spacing:.5px;font-variant-numeric:tabular-nums}
+.stat .v small{font-size:16px;color:var(--ash);letter-spacing:1px}
+.stat.crit .v{color:var(--red2)}
+.stat.gold .v{color:var(--gold)}
+.progress{height:6px;background:var(--panel);margin-top:10px;position:relative;overflow:hidden}
+.progress i{position:absolute;inset:0 auto 0 0;background:var(--gold);width:0;transition:width .4s}
+.countdown{font-family:var(--display);font-size:34px;line-height:1;color:var(--bone);margin-top:6px}
+.countdown b{color:var(--red2);font-weight:400}
+.stat .sub{font-family:var(--mono);font-size:11px;color:var(--bone2);margin-top:6px}
+
+/* toolbar */
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin:6px 0 14px}
+.views{display:flex;gap:0;border:1px solid var(--line2);flex-wrap:wrap}
+.views button{background:transparent;border:0;border-right:1px solid var(--line2);padding:8px 14px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--bone2)}
+.views button:last-child{border-right:0}
+.views button.on{background:var(--gold);color:var(--black);font-weight:700}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filters input,.filters select{background:var(--cement);border:1px solid var(--line2);padding:7px 10px;color:var(--bone);font-family:var(--mono);font-size:12px;border-radius:0}
+.filters input{min-width:180px}
+
+/* chips */
+.chip{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border:1px solid var(--line2);color:var(--bone2);white-space:nowrap}
+.chip.own{border-color:var(--bone2);color:var(--bone)}
+.pri{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;white-space:nowrap}
+.pri.High{background:var(--red);color:#fff}
+.pri.Medium{background:var(--gold);color:var(--black)}
+.pri.Low{background:var(--panel);color:var(--bone2);border:1px solid var(--line2)}
+.st{display:inline-block;width:10px;height:10px;border:1px solid var(--ash);flex:none}
+.st.todo{background:transparent}
+.st.doing{background:var(--gold);border-color:var(--gold)}
+.st.done{background:var(--ok);border-color:var(--ok)}
+.st.skip{background:var(--line2);border-color:var(--line2)}
+.cxb{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--gold);border:1px solid var(--gold);padding:1px 5px}
+
+/* list */
+.phase{margin:26px 0 10px;display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--line);padding-bottom:6px;flex-wrap:wrap}
+.phase h2{font-family:var(--display);font-size:28px;margin:0;letter-spacing:1px;font-weight:400}
+.phase h2 em{color:var(--red2);font-style:normal;margin-right:8px}
+.phase .blurb{color:var(--ash);font-size:13px;max-width:60ch}
+.phase .cnt{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ash);white-space:nowrap}
+.row{display:grid;grid-template-columns:22px 48px 1fr 110px 90px 80px 150px 24px;gap:12px;align-items:center;padding:10px 8px;border-bottom:1px solid var(--line);cursor:pointer;transition:background .12s}
+.row:hover{background:var(--cement)}
+.row.done .title{color:var(--ash);text-decoration:line-through}
+.row.skip{opacity:.45}
+.row.overdue .due{color:var(--red2)}
+.row.soon .due{color:var(--gold)}
+.row .id{font-family:var(--mono);font-size:11px;color:var(--ash);font-variant-numeric:tabular-nums}
+.row .title{font-weight:500;min-width:0}
+.row .title .sub{display:block;font-size:12px;color:var(--ash);font-weight:400;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60ch}
+.row .due{font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums;color:var(--bone2)}
+.row .due small{display:block;color:var(--ash);font-size:10px}
+.row .more{color:var(--ash);text-align:right}
+.hdr{display:grid;grid-template-columns:22px 48px 1fr 110px 90px 80px 150px 24px;gap:12px;padding:6px 8px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ash);border-bottom:1px solid var(--line2)}
+.empty{padding:40px;text-align:center;color:var(--ash);border:1px dashed var(--line2);font-family:var(--mono);font-size:12px}
+
+/* board */
+.board{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;align-items:start}
+.col{background:var(--cement);border:1px solid var(--line);min-height:120px}
+.col h3{margin:0;padding:10px 12px;font-family:var(--display);font-size:20px;letter-spacing:1px;font-weight:400;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.col h3 span{font-family:var(--mono);font-size:11px;color:var(--ash);letter-spacing:.1em}
+.col .col-bar{height:3px}
+.card{padding:10px 12px;border-bottom:1px solid var(--line);cursor:pointer;display:flex;flex-direction:column;gap:6px}
+.card:hover{background:var(--panel)}
+.card .t{font-weight:500;font-size:13px;line-height:1.35}
+.card .m{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-family:var(--mono);font-size:10px;color:var(--ash)}
+.card.done .t{text-decoration:line-through;color:var(--ash)}
+.card.overdue .m .d{color:var(--red2)}
+
+/* calendar */
+.cal-head{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.cal-head h3{font-family:var(--display);font-size:30px;margin:0;letter-spacing:1px;font-weight:400;min-width:220px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.cal .dow{background:var(--panel);padding:6px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ash);text-align:center}
+.day{background:var(--cement);min-height:104px;padding:6px;display:flex;flex-direction:column;gap:3px;min-width:0}
+.day.out{background:var(--black);opacity:.5}
+.day .n{font-family:var(--mono);font-size:11px;color:var(--ash);display:flex;justify-content:space-between}
+.day.today .n{color:var(--gold);font-weight:700}
+.day.rel{outline:2px solid var(--red);outline-offset:-2px}
+.day.rel .n::after{content:"RELEASE";color:var(--red2);letter-spacing:.1em;font-size:9px}
+.ev{font-size:11px;line-height:1.25;padding:2px 5px;background:var(--panel);border-left:2px solid var(--ash);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ev.High{border-left-color:var(--red2)}
+.ev.Medium{border-left-color:var(--gold)}
+.ev.done{opacity:.45;text-decoration:line-through}
+.ev:hover{background:var(--line2)}
+.day .morelink{font-family:var(--mono);font-size:10px;color:var(--gold);cursor:pointer}
+
+/* next move */
+.next-hero{background:linear-gradient(135deg,var(--cement),var(--black));border:1px solid var(--line2);border-left:4px solid var(--red);padding:22px 24px;margin-bottom:16px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;cursor:pointer}
+.next-hero .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--red2)}
+.next-hero h2{font-family:var(--display);font-size:38px;margin:6px 0 8px;letter-spacing:1px;font-weight:400;line-height:1;text-wrap:balance}
+.next-hero p{margin:0;color:var(--bone2);max-width:70ch}
+.next-hero .why{font-family:var(--mono);font-size:11px;color:var(--ash);margin-top:8px}
+.next-hero .big{font-family:var(--display);font-size:64px;line-height:1;color:var(--gold);text-align:right;font-variant-numeric:tabular-nums}
+.next-hero .big small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--ash)}
+.next-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.next-grid .col{border-top:3px solid var(--line2)}
+.next-grid .col.overdue{border-top-color:var(--red2)}
+.next-grid .col.week{border-top-color:var(--gold)}
+.next-grid .col.later{border-top-color:var(--ash)}
+.next-grid .col.act{border-top-color:var(--bone2)}
+.actrow{padding:8px 12px;border-bottom:1px solid var(--line);font-size:12px;color:var(--bone2)}
+.actrow b{color:var(--bone);font-weight:500}
+.actrow .w{font-family:var(--mono);font-size:10px;color:var(--ash);display:block}
+
+/* modal */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow:auto;z-index:50}
+.overlay.open{display:flex}
+.modal{background:var(--cement);border:1px solid var(--line2);width:min(720px,100%);border-top:4px solid var(--red)}
+.modal header{padding:16px 20px 10px;display:flex;align-items:flex-start;gap:12px;justify-content:space-between}
+.modal header .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ash);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.modal h2{font-family:var(--display);font-size:30px;margin:6px 0 0;letter-spacing:1px;font-weight:400;line-height:1;text-wrap:balance}
+.modal .x{background:none;border:0;color:var(--ash);font-size:22px;line-height:1;padding:4px}
+.modal .x:hover{color:var(--red2)}
+.modal .body{padding:8px 20px 20px;display:grid;gap:14px}
+.ideas{background:var(--black);border:1px solid var(--line);padding:12px 14px;border-left:3px solid var(--gold)}
+.ideas .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.ideas p{margin:0;color:var(--bone2);max-width:70ch}
+.ideas .note{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line2);color:var(--bone)}
+.ideas .note .lbl{color:var(--red2)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.status-row{display:flex;gap:0;border:1px solid var(--line2)}
+.status-row button{flex:1;background:transparent;border:0;border-right:1px solid var(--line2);padding:9px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--bone2)}
+.status-row button:last-child{border-right:0}
+.status-row button.on{background:var(--gold);color:var(--black);font-weight:700}
+.status-row button.on.done{background:var(--ok);color:#fff}
+.status-row button.on.skip{background:var(--line2);color:var(--bone)}
+.modal footer{padding:12px 20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.modal .stamp{font-family:var(--mono);font-size:10px;color:var(--ash)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--gold);color:var(--black);font-family:var(--mono);font-size:12px;letter-spacing:.06em;padding:10px 16px;opacity:0;transition:.2s;pointer-events:none;z-index:60;max-width:90vw;text-align:center}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.help{font-family:var(--mono);font-size:11px;color:var(--ash);margin-top:6px}
+.foot{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--ash);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.foot b{color:var(--gold);font-weight:500}
+
+/* mode switch + playbooks */
+.mode{display:flex;border:1px solid var(--gold)}
+.mode button{background:transparent;border:0;padding:8px 16px;font-family:var(--display);font-size:18px;letter-spacing:1px;color:var(--gold)}
+.mode button.on{background:var(--gold);color:var(--black)}
+.plan-nav{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--line2);margin-bottom:16px}
+.plan-nav button{background:transparent;border:0;border-right:1px solid var(--line2);padding:8px 12px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--bone2);display:flex;align-items:center;gap:6px}
+.plan-nav button i{width:6px;height:6px;border-radius:50%;background:var(--ok);display:inline-block}
+.plan-nav button.on{background:var(--gold);color:var(--black);font-weight:700}
+.plan-nav button.on i{background:var(--black)}
+.plan-head{border-left:4px solid var(--red);padding:4px 0 4px 16px;margin-bottom:8px}
+.plan-head h2{font-family:var(--display);font-size:36px;margin:0;letter-spacing:1px;font-weight:400;line-height:1}
+.plan-head p{margin:6px 0 0;color:var(--bone2);max-width:75ch}
+.plan-stamp{font-family:var(--mono);font-size:10px;color:var(--ash);margin-top:6px}
+.plan-sec{margin:22px 0;border-top:1px solid var(--line);padding-top:12px}
+.plan-sec h3{font-family:var(--display);font-size:22px;margin:0 0 4px;letter-spacing:1px;font-weight:400}
+.plan-sec .help{margin:0 0 10px;max-width:80ch}
+.plan-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.pf.wide,.wide{grid-column:1/-1}
+.pf textarea{resize:vertical}
+.cnt{color:var(--ash);text-transform:none;letter-spacing:0}
+.checks{display:grid;gap:4px}
+.checks-h{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.ck{display:flex;gap:10px;align-items:flex-start;padding:7px 10px;background:var(--cement);border:1px solid var(--line);cursor:pointer}
+.ck input{accent-color:var(--gold);margin-top:3px;flex:none}
+.ck.on span{color:var(--ash);text-decoration:line-through}
+.tscroll{overflow-x:auto}
+.ptable table,.ref,.kpi{width:100%;border-collapse:collapse;font-size:13px}
+.ptable th,.ref th,.kpi th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ash);text-align:left;padding:6px 6px;border-bottom:1px solid var(--line2);white-space:nowrap}
+.ptable td,.ref td,.kpi td{padding:3px 4px;border-bottom:1px solid var(--line);vertical-align:middle}
+.ref td{padding:8px 6px;color:var(--bone2);vertical-align:top}
+.ref td:first-child{color:var(--bone);font-weight:500}
+.ptable td input,.ptable td select,.kpi td input{width:100%;background:var(--cement);border:1px solid var(--line);padding:6px 8px;color:var(--bone);min-width:90px;border-radius:0}
+.ptable td input[type=number],.kpi td input{min-width:70px}
+.ptable td input:focus,.kpi td input:focus{border-color:var(--gold);outline:none}
+.ptable td.c{text-align:center}
+.ptable td.c input{width:auto;min-width:0;accent-color:var(--gold)}
+.ptable tr.tot td{font-family:var(--mono);color:var(--gold);padding:8px 8px;border-bottom:0}
+.rowx{background:none;border:0;color:var(--ash);font-size:18px;line-height:1}
+.rowx:hover{color:var(--red2)}
+.ptable .btn{margin-top:8px}
+.ccal{display:grid;gap:8px}
+.cweek{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.cday{background:var(--cement);padding:6px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.cday.rel{outline:2px solid var(--red);outline-offset:-2px}
+.cday.today .cd-h{color:var(--gold)}
+.cd-h{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--ash)}
+.cd-s{font-size:11px;color:var(--gold2);line-height:1.3;min-height:28px}
+.cday textarea{width:100%;background:var(--black);border:1px solid var(--line);color:var(--bone);font-size:12px;padding:5px 6px;resize:vertical;border-radius:0}
+.cday textarea:focus{border-color:var(--gold);outline:none}
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.ph{background:var(--cement);padding:10px 12px;display:flex;flex-direction:column;gap:3px}
+.ph b{font-family:var(--display);font-size:18px;letter-spacing:1px;font-weight:400}
+.ph .mono{font-family:var(--mono);font-size:11px;color:var(--gold)}
+.ph small{color:var(--ash);font-size:11px}
+.tl{display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
+.tl-r{display:grid;grid-template-columns:110px 1fr;gap:12px;background:var(--cement);padding:7px 12px}
+.tl-r .mono{font-family:var(--mono);font-size:12px;color:var(--gold)}
+.clines{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.clines>div{background:var(--black);border:1px solid var(--line);border-left:3px solid var(--gold);padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.clines .mono{font-family:var(--mono);font-size:15px;color:var(--bone)}
+.clines small{color:var(--ash)}
+.bsum{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.bsum>div{background:var(--cement);padding:10px 14px}
+.bsum span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ash)}
+.bsum b{font-family:var(--display);font-size:26px;letter-spacing:.5px;font-weight:400}
+.bsum b.bad{color:var(--red2)}.bsum b.good{color:var(--ok)}
+.kpi td:first-child{color:var(--bone2);white-space:nowrap}
+.kpi td.dim{color:var(--ash);font-size:12px}
+.bsum .rec{grid-column:span 3}
+.bsum .rec small{display:block;color:var(--bone2);font-size:12px;margin-top:4px}
+.bsum b small{font-size:14px;color:var(--ash)}
+.syncbar select{background:var(--cement);border:1px solid var(--line2);padding:4px 8px;color:var(--bone);font-family:var(--mono);font-size:11px;max-width:240px}
+.plan-foot{display:flex;gap:8px;justify-content:flex-end;margin-top:20px;padding-top:12px;border-top:1px solid var(--line)}
+@media (max-width:960px){.cweek{grid-template-columns:1fr}.clines{grid-template-columns:1fr}.plan-fields{grid-template-columns:1fr}}
+
+/* print */
+#printView{display:none}
+@media print{
+  body{background:#fff;color:#111;font-size:11px}
+  .app,.overlay,.toast{display:none!important}
+  #printView{display:block;padding:0 4mm}
+  #printView h1{font-family:var(--display);font-size:28pt;margin:0;letter-spacing:1px;font-weight:400}
+  #printView .meta{font-family:var(--mono);font-size:9pt;color:#555;margin:2mm 0 6mm;border-bottom:2px solid #B5121B;padding-bottom:3mm}
+  #printView h2{font-family:var(--display);font-size:18pt;margin:8mm 0 2mm;font-weight:400;letter-spacing:1px;border-bottom:1px solid #999;page-break-after:avoid}
+  #printView table{width:100%;border-collapse:collapse}
+  #printView th{font-family:var(--mono);font-size:8pt;text-align:left;text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid #999;padding:2px 4px}
+  #printView td{padding:3px 4px;border-bottom:1px solid #ddd;vertical-align:top;page-break-inside:avoid}
+  #printView td.m{font-family:var(--mono);font-size:8.5pt;white-space:nowrap}
+  #printView p{margin:1mm 0}
+  #printView td .i{color:#444;font-size:9.5px;display:block;margin-top:1px}
+  #printView td .n{color:#8a1017;font-size:9.5px;display:block;margin-top:1px}
+  #printView .box{display:inline-block;width:9px;height:9px;border:1px solid #333;margin-right:4px;vertical-align:middle}
+  #printView .box.done{background:#333}
+}
+@media (max-width:960px){
+  .setup{grid-template-columns:1fr 1fr}
+  .preset{grid-column:1/-1}
+  .stats{grid-template-columns:1fr 1fr}
+  .stat:first-child{grid-column:1/-1}
+  .row,.hdr{grid-template-columns:22px 1fr 100px}
+  .row .id,.row .area,.row .pri-cell,.row .own-cell,.row .more,.hdr span:nth-child(2),.hdr span:nth-child(4),.hdr span:nth-child(5),.hdr span:nth-child(6),.hdr span:nth-child(8){display:none}
+  .brand h1{font-size:34px}
+  .top{flex-direction:column;align-items:flex-start}
+  .next-hero{grid-template-columns:1fr}
+  .next-hero .big{text-align:left}
+  .grid2{grid-template-columns:1fr}
+  .day{min-height:70px}
+  .ev{font-size:9px}
+  .syncbar .who{margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <div class="brand">
+      <div class="mark">X</div>
+      <div>
+        <h1>CXB READY <span>RELEASE ROADMAP</span></h1>
+        <div class="tag">Move Different. Drop Fear None. · 118 tasks · 12 playbooks · master rights stay yours</div>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button class="btn" id="btnAdd">+ Custom task</button>
+      <button class="btn" id="btnCsv">Export CSV</button>
+      <button class="btn" id="btnPrint">Print roadmap</button>
+      <button class="btn" id="btnBackup">Backup</button>
+      <button class="btn" id="btnRestore">Restore</button>
+      <button class="btn danger" id="btnReset">Reset</button>
+      <input type="file" id="fileRestore" accept="application/json" hidden>
+    </div>
+  </div>
+
+  <div class="syncbar">
+    <span class="dot" id="syncDot"></span>
+    <span id="syncText">Checking sync…</span>
+    <span class="room" id="syncRoom"></span>
+    <select id="selRoom" hidden title="Switch release"></select><button class="btn sm" id="btnNewRel" hidden>+ New release</button><button class="btn sm" id="btnRoom" hidden>Join room</button>
+    <button class="btn sm" id="btnShare" hidden>Copy share link</button>
+    <span class="who"><label for="who">Your name</label><input id="who" placeholder="e.g. Davette" maxlength="24"></span>
+  </div>
+
+  <div class="setup">
+    <div class="field"><label for="fArtist">Artist</label><input id="fArtist" placeholder="Artist name"></div>
+    <div class="field"><label for="fManager">Manager / team</label><input id="fManager" placeholder="Who runs the plan"></div>
+    <div class="field"><label for="fProject">Project title</label><input id="fProject" placeholder="Song, EP, or album title"></div>
+    <div class="field"><label for="fType">Release type</label>
+      <select id="fType"><option value="single">Single · 60-day runway</option><option value="ep">EP · 75-day runway</option><option value="album">Album · 90-day runway</option><option value="mixtape">Mixtape · 75-day runway</option></select></div>
+    <div class="field"><label for="fDate">Release date</label><input id="fDate" type="date"></div>
+    <div class="preset"><button class="btn" id="btnToday" title="Sets the release date so the first task starts this week">Start today</button><button class="btn gold" id="btnPreset">Kid Cxbra preset</button></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="k">Countdown</div>
+      <div class="countdown" id="sCount">—</div>
+      <div class="sub" id="sMeta">Set a release date to build your deadlines.</div>
+    </div>
+    <div class="stat gold"><div class="k">Progress</div><div class="v" id="sProg">0<small>%</small></div><div class="progress"><i id="sBar"></i></div></div>
+    <div class="stat"><div class="k">Done / Active</div><div class="v" id="sDone">0<small>/118</small></div></div>
+    <div class="stat crit"><div class="k">Overdue</div><div class="v" id="sOver">0</div></div>
+    <div class="stat"><div class="k">Due in 7 days</div><div class="v" id="sWeek">0</div></div>
+  </div>
+
+  <div class="toolbar">
+    <div class="mode" id="mode"><button data-m="tasks" class="on">Tasks</button><button data-m="plans">Playbooks</button></div>
+    <div class="views" id="views">
+      <button data-v="next" class="on">CXB Next Move</button>
+      <button data-v="list">List</button>
+      <button data-v="status">Status</button>
+      <button data-v="area">Work area</button>
+      <button data-v="priority">Priority</button>
+      <button data-v="owner">Owner</button>
+      <button data-v="calendar">Calendar</button>
+    </div>
+    <div class="filters">
+      <input id="q" placeholder="Search tasks…">
+      <select id="fArea"><option value="">All areas</option></select>
+      <select id="fPri"><option value="">All priorities</option><option>High</option><option>Medium</option><option>Low</option></select>
+      <select id="fOwn"><option value="">Anyone</option><option value="artist">Artist</option><option value="manager">Manager</option><option value="both">Both</option></select>
+      <select id="fStatus"><option value="">All statuses</option><option value="todo">Not started</option><option value="doing">In progress</option><option value="done">Done</option><option value="skip">Skipped</option><option value="open">Not done</option></select>
+    </div>
+  </div>
+
+  <div id="main"></div>
+
+  <div class="foot">
+    <div><b>CXB™ Group</b> · Kid Cxbra · independent hip-hop out of Philly</div>
+    <div id="footNote">Progress saves in this browser. Use Backup / Restore to move it.</div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay"><div class="modal" id="modal" role="dialog" aria-modal="true"></div></div>
+<div class="toast" id="toast"></div>
+<div id="printView"></div>
+
+<script>
+// CXB Ready Release Roadmap — task library
+// [id, area, priority, startOffset, endOffset, title, ideas]
+// Offsets are days relative to release day (negative = before). Base scale = album (90-day runway).
+const AREAS = {
+  CS:{name:'Creative Strategy',short:'Creative'},
+  PM:{name:'Project Management',short:'Project'},
+  PR:{name:'Press & Communication',short:'Press'},
+  SM:{name:'Social Media',short:'Social'},
+  DP:{name:'Digital Platforms',short:'Platforms'},
+  MR:{name:'Monetization & Rights',short:'Money & Rights'},
+  FG:{name:'Fan Growth',short:'Fans'},
+  AN:{name:'Analytics',short:'Analytics'}
+};
+const PHASES = [
+  {key:'A',name:'Foundation',range:[-999,-61],blurb:'Lock the music, the rights, and the plan. Nothing else matters until these are true.'},
+  {key:'B',name:'Build',range:[-60,-31],blurb:'Make every asset you will need so launch week is execution, not creation.'},
+  {key:'C',name:'Pre-Launch',range:[-30,-1],blurb:'Deliver, pitch, tease, and turn the audience up.'},
+  {key:'D',name:'Release & Run',range:[0,999],blurb:'Go live, work the numbers, and set up the next drop.'}
+];
+const TASKS = [
+[1,'CS','High',-90,-84,'Lock the release: type, tracklist, final masters','Decide single, EP, album, or mixtape. Confirm final mixes and masters are done or on a dated schedule. No date gets set until the masters exist.'],
+[2,'PM','High',-90,-85,'Set the release date (a Friday)','Pick a Friday at least 6 weeks out so playlist pitching windows stay open. Check it against holidays and major releases in your lane.'],
+[3,'MR','High',-90,-80,'Confirm you own 100% of your masters','Read every producer and beat agreement. If you bought a lease, upgrade to exclusive or confirm the lease allows this distribution. Never sign a deal that trades masters for an advance.'],
+[4,'MR','High',-90,-75,'Get producer and feature splits in writing','Use one split sheet per song: writer %, producer %, publishing %. Everyone signs before release. No signed split sheet, no release.'],
+[5,'MR','High',-88,-70,'Clear all samples and interpolations','If a beat contains a sample, get written clearance or replace the element. Uncleared samples get takedowns and pull your revenue.'],
+[6,'CS','High',-88,-80,'Define the concept and one-line thesis','Write one sentence: what this project is about and who it is for. Every visual, caption, and pitch should trace back to it.'],
+[7,'CS','Medium',-88,-80,'Choose the focus track','Pick the song with the strongest first 15 seconds. That is the one that carries ads, teasers, and playlist pitches. For a single, confirm the single is strong enough to carry all of it.'],
+[8,'PM','High',-87,-80,'Set the release budget','List every cost: mixing and mastering, artwork, video, ads, PR, merch. Set a cap and a 15% reserve. Track spend against it weekly.'],
+[9,'PM','Medium',-86,-78,'Build the release team roster','Even solo: list who does what (you, manager, designer, videographer, editor). Add contact, deadline, and pay for each.'],
+[10,'MR','High',-85,-70,'Register with a PRO as writer and publisher','ASCAP or BMI. One account as writer, one as publisher, so you collect both halves of performance royalties.'],
+[11,'MR','High',-85,-70,'Enroll with The MLC','The Mechanical Licensing Collective pays U.S. streaming mechanicals. It is free. Register every new song after release too.'],
+[12,'MR','Medium',-85,-65,'Register with SoundExchange','Collects digital performance royalties from Pandora, SiriusXM, and internet radio. Free and separate from your PRO.'],
+[13,'MR','Medium',-84,-60,'Set up publishing admin','Songtrust or similar collects global mechanicals your PRO and MLC miss. Setup fee plus a percentage. Worth it once you have real streams.'],
+[14,'DP','High',-84,-75,'Choose and confirm your distributor','Compare DistroKid, UnitedMasters, TuneCore, Symphonic. Check: keep 100% masters, payout speed, splits feature, Content ID, sync options.'],
+[15,'DP','Medium',-84,-70,'Audit all artist profiles for consistency','Same name spelling, same photo, same bio on Spotify, Apple, YouTube, Instagram, TikTok, SoundCloud, Bandcamp.'],
+[16,'AN','Medium',-83,-70,'Set the release goals and KPIs','Pick 3 to 5 numbers: first-week streams, saves, new followers, email signups, merch orders. Write the baseline now so you can measure lift.'],
+[17,'CS','Medium',-83,-60,'Write the story of the project','Three paragraphs: where you were, what happened, what this project says. Reuse it for bios, press, and captions.'],
+[18,'PM','Medium',-82,-70,'Create the shared release calendar','One calendar everyone can see. Add every deadline from this roadmap. Set reminders three days before each.'],
+[19,'DP','High',-82,-60,'Set up or update your artist website','One page minimum: hero, streaming links, email capture, merch, booking. Make sure the pre-save link can live here.'],
+[20,'FG','High',-82,-60,'Set up email and SMS capture','Use Kit, Mailchimp, or similar. Add a form on the site and a link in every bio. The list gets the track first, always.'],
+[21,'DP','Medium',-80,-65,'Claim Spotify for Artists, Apple Music for Artists, YouTube Official Artist Channel','You need these to pitch, see data, and update your profile. Claim them now. Approval can take days.'],
+[22,'CS','High',-80,-55,'Plan the artwork: cover, single covers, alt covers','Brief a designer or shoot it yourself. The cover must read at 100 pixels. Plan square, vertical (9:16), and banner crops from the start.'],
+[23,'CS','Medium',-80,-55,'Plan the visual identity for this era','Pick 2 or 3 colors, one font pairing, and one motif only this project uses. Everything from cover to captions follows it.'],
+[24,'SM','Medium',-80,-70,'Audit your social accounts','Update bios, profile pictures, pinned posts, and link-in-bio. Remove dead links. Check that handles match everywhere.'],
+[25,'AN','Medium',-80,-70,'Install analytics on the site','GA4 plus UTM tags on every link you control. Without this you will never know which post drove the streams.'],
+[26,'CS','Medium',-78,-55,'Decide the content pillars for the campaign','Example: behind the scenes, lyric breakdowns, fan interaction, performance clips, lifestyle. Three to five pillars max.'],
+[27,'PM','Medium',-78,-65,'Write the master task list and assign owners','Start from this roadmap. Cut what you will not do. Add what is missing. Every task gets a name and a date.'],
+[28,'PR','Medium',-78,-60,'Update the EPK','Short, medium, and long bio, quick facts, press photos, streaming numbers, links, booking contact. One PDF, one web page.'],
+[29,'FG','Medium',-78,-60,'Map your existing fan base','Where are your listeners? Spotify for Artists shows cities and ages. Build the campaign around the top three cities.'],
+[30,'MR','Medium',-76,-60,'Write the collaboration guardrails','Before any feature or brand deal: what you will never sign away (masters, name, likeness), your minimum fee, and who approves.'],
+[31,'DP','High',-60,-50,'Get ISRC and UPC codes','Your distributor issues them free. Record them in your catalog sheet. You will need them for every registration.'],
+[32,'CS','High',-60,-45,'Finalize artwork and all crops','Deliver 3000x3000 cover, 1080x1920 vertical, 1500x500 banner, 1080x1080 social. Check text on small screens.'],
+[33,'CS','High',-60,-40,'Shoot the music video or visualizer','A one-take phone video beats nothing. Shoot vertical and horizontal at the same time. Get 30+ minutes of B-roll for teasers.'],
+[34,'CS','Medium',-60,-45,'Shoot press photos and content-day images','One session, three looks, 100+ usable images. Vertical for reels, horizontal for press, square for grid.'],
+[35,'SM','Medium',-58,-45,'Build the content bank (30+ pieces)','Cut teasers, lyric snippets, studio clips, and fan questions now. Aim for 30 posts before launch so you are never posting live.'],
+[36,'PR','Medium',-58,-40,'Build the press and playlist contact list','Local outlets, blogs in your lane, curators, radio shows, podcasts. Name, email, what they cover, last post. 50+ rows.'],
+[37,'PM','Medium',-58,-50,'Create the asset folder structure','One cloud folder: audio, art, video, photos, press, copy. Name files by date and version. Share read-only links.'],
+[38,'MR','High',-56,-45,'Set up split payments with your distributor','Enter producer and feature percentages in the distributor splits tool so everyone gets paid automatically. Keep the signed sheets on file.'],
+[39,'DP','Medium',-56,-45,'Write the metadata sheet','Title, artist, features, writers, producers, ISRC, UPC, explicit flag, genre, language, lyrics. One row per track. Copy from this everywhere.'],
+[40,'CS','Medium',-55,-40,'Write and time-stamp the lyrics','Submit lyrics through Musixmatch or your distributor. Synced lyrics drive saves and TikTok use.'],
+[41,'DP','Medium',-55,-45,'Prepare Spotify Canvas loops','Three to eight second vertical loops for each track. Cut from the video shoot. Upload once the release is delivered.'],
+[42,'SM','Medium',-55,-40,'Plan the teaser sequence','Week 4: mood. Week 3: sound. Week 2: title and date. Week 1: pre-save push. Map exact post dates.'],
+[43,'FG','Medium',-55,-40,'Write the welcome email sequence','Five emails: who you are, the story, an unreleased track, the merch, the ask (pre-save or share). Set to auto-send on signup.'],
+[44,'PR','Medium',-54,-35,'Write the press release','Headline, date, one-paragraph hook, a quote from you, quick facts, links, contact. 300 words max. Save as PDF and plain text.'],
+[45,'PR','Medium',-54,-35,'Write three pitch email templates','One for blogs, one for playlist curators, one for radio and podcasts. Under 120 words each. Personalize the first line every time.'],
+[46,'MR','Medium',-52,-40,'Plan merch tied to the release','One drop piece per release (tee, hoodie, sticker pack). Set price, quantity, and fulfillment (Fourthwall, Printful, or hand-shipped).'],
+[47,'MR','Medium',-52,-35,'Set up Bandcamp or direct-to-fan sales','Sell the project direct: WAV download, limited bundle, signed print. You keep far more per sale than streaming pays.'],
+[48,'DP','Medium',-52,-40,'Build the smart link and landing page','One link that routes to every platform (Linkfire, Feature.fm, ToneDen, or your own site). Add pixel and UTMs.'],
+[49,'SM','Medium',-50,-40,'Design social templates','Reusable frames for announcements, lyric cards, countdowns, and quotes. Same fonts and colors every time.'],
+[50,'AN','Medium',-50,-40,'Set up a tracking spreadsheet','Tabs: daily streams, followers per platform, email list size, ad spend, merch orders. Update every Monday.'],
+[51,'CS','Low',-50,-35,'Plan behind-the-scenes documentation','Assign someone to film every session, shoot, and meeting. Raw footage becomes months of content.'],
+[52,'FG','Medium',-50,-35,'Plan a fan-first exclusive','What does the list get first? The unreleased track, early merch access, a listening call, or a signed item.'],
+[53,'PM','Medium',-48,-40,'Get quotes for paid promo','Ads (Meta, TikTok), playlist promo (legit only, never pay-for-placement on Spotify), PR retainers. Decide what fits the budget.'],
+[54,'SM','Medium',-48,-35,'Reach out to micro-creators for collabs','Ten to twenty creators in your city or lane with 5k to 50k followers. Offer content, not just money. Confirm three to five.'],
+[55,'PR','Medium',-48,-35,'Line up a premiere partner','Ask one blog, YouTube channel, or radio show to premiere the video or single 24 hours early. Give them the exclusive.'],
+[56,'MR','Medium',-46,-35,'Register copyright with the U.S. Copyright Office','Register sound recording and composition (Form SR covers both if you own both). It is what lets you act on theft.'],
+[57,'DP','Medium',-46,-40,'Turn on YouTube Content ID through your distributor','Anyone using your song on YouTube then generates revenue for you, not them.'],
+[58,'CS','Medium',-45,-35,'Cut the vertical video edits','Full song vertical, three 15-second hooks, one 60-second edit. Burn in captions.'],
+[59,'PR','Low',-45,-35,'Draft a one-page fact sheet for DJs and radio','BPM, key, clean and explicit versions, run time, contact. Attach to every DJ email.'],
+[60,'FG','Low',-45,-35,'Plan a street or local activation','A listening party, pop-up, or performance in your top city. Even 20 people in a room is content and proof.'],
+[61,'SM','Low',-44,-35,'Set up a link-in-bio hub','Linktree, Beacons, or your own page. Order: pre-save first, then video, merch, email. Tag every link with UTMs.'],
+[62,'PM','Medium',-42,-35,'Hold the midpoint review','Check every task above. What is late? What is cut? Re-date the rest. Adjust the budget.'],
+[63,'DP','High',-30,-28,'Upload the release to your distributor','Deliver at least four weeks early. WAV 16 or 24-bit 44.1kHz, artwork 3000x3000, metadata from your sheet. Choose release-on-this-date and check every field twice.'],
+[64,'DP','High',-28,-25,'Verify the release appears in Spotify for Artists','It should show as upcoming within two to five days. If not, contact the distributor immediately.'],
+[65,'DP','High',-28,-21,'Pitch the focus track to Spotify editorial','Submit in Spotify for Artists at least seven days before release (earlier is better). Fill every field: genre, mood, instruments, story. Only one track per release.'],
+[66,'DP','High',-28,-21,'Pitch to Apple Music, Amazon, Deezer, Tidal','Use your distributor pitching tools or each platform form. Same story, adapted per platform.'],
+[67,'DP','High',-28,-24,'Generate the pre-save link','Create the pre-save on your smart-link tool. Test it on iPhone and Android. Put it in every bio.'],
+[68,'SM','High',-28,-1,'Post the announcement (title, date, cover)','The big reveal. Post the same day on every platform, then pin it. The caption ends with the pre-save link.'],
+[69,'FG','High',-28,-26,'Email and text the list: announcement plus first listen','Send the unreleased track or a 60-second private link to subscribers only. This is the promise you made them.'],
+[70,'PR','High',-27,-20,'Send press releases and pitches (wave 1)','Local outlets and blogs first. Personalize every email. Track opens and replies in your sheet.'],
+[71,'PR','Medium',-27,-14,'Send playlist curator pitches (independent curators)','SubmitHub, Groover, or direct email to real curators. Never pay for guaranteed placement. It violates Spotify terms.'],
+[72,'SM','High',-27,-1,'Run the teaser sequence','Follow the teaser plan. Four to five posts per week. Reply to every comment within an hour on posting day.'],
+[73,'SM','Medium',-26,-20,'Post the countdown and pre-save call','Pre-save and get it first, with a clear reason. Repeat every three days with different clips.'],
+[74,'MR','Medium',-26,-15,'Open merch pre-orders','Launch the drop piece as a pre-order timed to ship release week. Bundle with a download or signed item.'],
+[75,'DP','Medium',-25,-20,'Update all platform profiles','New cover as header, new bio line about the release, pre-save link pinned. Spotify, Apple, YouTube, Instagram, TikTok, X, Facebook.'],
+[76,'SM','Medium',-25,-15,'Start TikTok and Reels sound seeding','Post the hook five or more times in different formats. Ask your confirmed creators to post the week before release.'],
+[77,'AN','Medium',-25,-1,'Track pre-saves and list growth daily','Log pre-saves, email signups, and follower counts every day. Spot which post drives spikes.'],
+[78,'PR','Medium',-24,-10,'Book interviews and podcast appearances','Aim for two to four conversations to publish release week. Send the fact sheet and three suggested questions.'],
+[79,'CS','Medium',-24,-14,'Finish the music video edit','Lock the final cut, color, and captions. Export 4K horizontal plus 1080x1920 vertical. Upload to YouTube as private.'],
+[80,'DP','Medium',-22,-14,'Schedule the YouTube premiere','Set the video to premiere at release-day midnight ET or a peak evening slot. Write the description with all links and timestamps.'],
+[81,'SM','Medium',-21,-14,'Launch the paid teaser ads','Small budget ($5 to $20 a day) on the best 15-second clip. Goal: pre-saves and follows. Kill any ad under 1% CTR after three days.'],
+[82,'FG','Medium',-21,-14,'Run a fan participation moment','Ask fans to pick the alt cover, guess the feature, or send a voice note. Feature the best ones in content.'],
+[83,'PR','Medium',-20,-7,'Send press wave 2 (wider outlets)','Genre blogs, scene press, and podcasts outside your city. Include any early coverage from wave 1 as proof.'],
+[84,'DP','Medium',-20,-14,'Submit lyrics and confirm credits display','Check that writers, producers, and features show correctly on Spotify and Apple. Fix through the distributor if not.'],
+[85,'MR','Medium',-20,-10,'Confirm split payments and payout accounts','Everyone has a verified payout method entered. Test with a $1 transfer if the tool allows.'],
+[86,'CS','Medium',-18,-10,'Cut release-day content','Release-day post, thank-you video, out-now story frames, lyric video snippet, first-look reaction. Schedule everything.'],
+[87,'SM','Medium',-18,-7,'Set up the release-week posting schedule','Use a scheduler. Day 0: four to six posts. Days 1 to 7: two to three a day. Mix formats: video, carousel, story, live.'],
+[88,'FG','Medium',-16,-10,'Prepare the release-day email and SMS','Subject line, three short lines, one button. Schedule for 12:05 AM ET release day. Second send at noon for late openers.'],
+[89,'PR','Medium',-15,-7,'Prepare DJ and radio servicing','Send clean and explicit WAVs plus the fact sheet to local DJs, college radio, and mix shows. Follow up once.'],
+[90,'PM','Medium',-14,-10,'Hold the T-14 go or no-go review','Is everything delivered? Distribution confirmed? Assets scheduled? If not, fix it now. The date does not move.'],
+[91,'DP','Medium',-14,-7,'Upload Canvas and update the Spotify About section','Canvas loops per track, Artist Pick set to the release, About bio updated with the story.'],
+[92,'SM','Medium',-14,-3,'Go live with a listening preview','Play 30 seconds, tell the story, answer questions. Save the replay as content.'],
+[93,'PR','Low',-14,-3,'Line up release-week guest posts or takeovers','A takeover of a partner story, a guest playlist, or a co-post with a creator on release day.'],
+[94,'MR','Low',-14,-5,'Prepare sync-ready files','Instrumental, clean, a cappella, stems. Label clearly. Upload to your sync library or keep ready for requests.'],
+[95,'FG','Medium',-12,-5,'Recruit a release-day street team','Twenty fans who will share, comment, and add to playlists in the first 24 hours. Give them a checklist and a thank-you.'],
+[96,'SM','Medium',-10,-5,'Post the one-week-out countdown','Daily story countdown with a new clip each day. Link sticker to pre-save.'],
+[97,'AN','Medium',-10,-3,'Set up the release-week dashboard','Spotify for Artists, Apple, YouTube Studio, email tool, merch store: one screen or one tab per tool. Screenshot baselines.'],
+[98,'PM','High',-7,-3,'Final check: links, assets, schedule','Click every link on every platform. Play every scheduled post. Confirm the premiere time. Test the merch checkout end to end.'],
+[99,'SM','High',-3,-1,'Post the tomorrow and midnight teasers','Final push. Tell people exactly what time and where. Pin the pre-save.'],
+[100,'FG','Medium',-2,-1,'Send the drops-at-midnight message','Short email and SMS: it is out at midnight, here is where. Include the pre-save one last time.'],
+[101,'DP','High',0,0,'Verify the release is live on every platform','At 12:01 AM check Spotify, Apple, YouTube, Amazon, Tidal, Deezer, SoundCloud. Grab the direct links and update the smart link.'],
+[102,'SM','High',0,0,'Post OUT NOW everywhere','All platforms within the first hour. Pin it. Reply to every comment for the first six hours.'],
+[103,'FG','High',0,0,'Send the release-day email and SMS','Fire the scheduled send. Check deliverability. Reply personally to anyone who writes back.'],
+[104,'DP','High',0,1,'Add the track to your own playlists and Artist Pick','Set it as Artist Pick on Spotify. Add it to every playlist you control. Update the smart link with live URLs.'],
+[105,'SM','High',0,2,'Go live to celebrate and thank fans','Play the song, read comments, show the merch. Keep it raw. Clip it for the week.'],
+[106,'PR','Medium',0,3,'Send the out-now note to press and curators','Short note to everyone you pitched: live links, any first-day numbers, a quote. Include the video.'],
+[107,'MR','Medium',0,7,'Launch the merch drop publicly','Switch pre-order to live. Post product shots and fan photos. Limit quantity or time to create urgency.'],
+[108,'AN','High',1,1,'Log the 24-hour numbers','Streams, saves, playlist adds, followers, video views, email opens, orders. Screenshot everything.'],
+[109,'SM','Medium',1,7,'Run the release-week content plan','Two to three posts a day. Repost every fan share. Use the video, lyric cards, reactions, and BTS from the bank.'],
+[110,'FG','Medium',1,7,'Thank the street team and top fans publicly','Shout them out in stories, send a private thank-you, give early access to the next thing.'],
+[111,'SM','Medium',2,10,'Turn on release-week ads','Move the budget to the out-now creative. Target listeners of similar artists and your top three cities. Optimize for streams or link clicks.'],
+[112,'AN','Medium',3,7,'Review week-one data and adjust','Which post drove the most streams? Which platform grew? Double down on what worked. Cut what did not.'],
+[113,'PR','Medium',3,14,'Follow up on press and playlist pitches','One polite follow-up to everyone who did not reply. Share any new coverage or milestone.'],
+[114,'MR','Medium',7,14,'Register the release with PRO, MLC, and SoundExchange','Every track, with ISRCs and splits. Do it within two weeks of release so nothing goes unclaimed.'],
+[115,'CS','Medium',7,21,'Release second-wave content','Remix, acoustic, visualizer, or BTS doc. Give the song a second life. A visualizer or live version keeps the algorithm feeding it.'],
+[116,'FG','Medium',7,21,'Pitch user playlists and fan communities','Reddit, Discord, and Facebook groups in your genre. Share as a fan would, not as an ad.'],
+[117,'AN','Medium',14,21,'Write the two-week report','Goals versus actuals from your KPI task. What you would repeat, what you would cut. Send to the team, or to yourself.'],
+[118,'PM','Medium',21,30,'Debrief and start the next roadmap','Close this project. Move the learnings into the next release plan. Set the next date now.']
+];
+
+// Kid Cxbra preset — fills setup + adds CXB-specific notes to tasks
+const PRESET_CXB = {
+  artist:'Kid Cxbra', project:'', type:'single', distributor:'DistroKid + UnitedMasters SELECT', email:'Kit', merch:'Fourthwall', dtf:'Bandcamp',
+  notes:{
+    3:'CXB rule: masters stay with CXB Group. No label, no manager, no gatekeepers is the pitch. Keep it true on paper.',
+    6:'CXB thesis to build from: Move Different. Drop Fear None. Independent hip-hop out of Philly. Melodic, dark, built different.',
+    14:'Current plan: DistroKid Ultimate for catalog and collabs, UnitedMasters SELECT for new brand-era releases where sync matters.',
+    15:'Handles: Spotify verified, YouTube @kidcxbra9544, Instagram @30kperk30 (personal) and @cxbbrand (brand). Genre line: independent hip-hop/rap, not trap metal.',
+    17:'Accuracy over embellishment. No producer, entrepreneur, or cinematic-visuals claims unless verified.',
+    19:'Site: kidcxbraofficialwebsite.netlify.app (custom HTML, GitHub to Netlify). Pre-save goes in the streaming hub and hero button.',
+    20:'Kit is the email tool. SMS opt-in field is on the site. An SMS sender (Textiful, SimpleTexting, or Call Loop via Zapier) still needs to be connected before texts go out.',
+    23:'Brand system: Oil Black, Bone White, Blood Red accent under 20%. Display Bebas Neue, body JetBrains Mono. One motif per surface: cobra head, the X, redacted bar, PHL stamp. Blood drip is CXLD BLOODED only.',
+    24:'Banned copy words: legendary, hustle, grind, vibes, journey, blessed.',
+    25:'GA4 snippet is in the site file with a placeholder ID. Create the real GA4 property and paste it in the two marked spots. Use the yyyy-mm_release UTM pattern for this drop.',
+    26:'Content franchises already defined: Drop Proof, PHL Files, Loud/Stealth, Cxbra Direct, Fan Proof.',
+    28:'EPK exists as epk.pdf (one page). Update streaming numbers and add the new release. Add a headshot when available.',
+    29:'Top cities come from Spotify for Artists. Philadelphia is the home base for any physical moment.',
+    36:'Press ladder: Philthy Mag, PhillyVoice, Inquirer (local) → Hip-Hop Wired, The High Note (scene) → Hypebeast, Highsnobiety (trade).',
+    46:'Drop calendar: sticker pack with every drop, CXB restock every four weeks, never a CXLD BLOODED reprint. Prices: CXB tee $38, crewneck $62, pullover $68, bomber $128. CXLD BLOODED hoodie $88, sweatpants $68, snapback $30, beanie $34.',
+    47:'Bandcamp is the direct-sales home for music. Merch checks out through Fourthwall.',
+    52:'Standing rule: the email list gets the unreleased track before Spotify. Every time.',
+    60:'Philly partner targets: Lapstone & Hammer, P\'s & Q\'s, Encanto Coffee and Kicks. Pop-up sequence: PHL → NYC/ATL → LA.',
+    69:'This is the list-first promise. Send the private link to Kit subscribers at least 48 hours before anyone else hears it.',
+    74:'Fourthwall pre-order. Match displayed site prices exactly.',
+    107:'Sticker pack ships with every drop. Post the CXB piece and the CXLD BLOODED piece as separate moments.',
+    114:'Register as writer and publisher with ASCAP, then The MLC, then SoundExchange. Songtrust for global mechanicals once set up.',
+    118:'CXB cadence: single or EP every 2 to 3 weeks, album or EP body every 6 to 9 weeks.'
+  }
+};
+
+(function(){
+const KEY='cxb_roadmap_v2';
+const SCALE={single:0.67,ep:0.83,album:1,mixtape:0.83};
+const RUNWAY={single:60,ep:75,album:90,mixtape:75};
+const STATUS={todo:'Not started',doing:'In progress',done:'Done',skip:'Skipped'};
+const OWNERS={artist:'Artist',manager:'Manager',both:'Both'};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const now=()=>Date.now();
+
+// ================= STATE =================
+// settings: {artist,manager,project,type,date,preset,updatedAt}
+// tasks: {id:{status,notes,owner,edit,updatedAt,by}}
+// custom: {id:{id,title,ideas,area,priority,start,end,deleted,updatedAt,by}}
+// activity: [{t,by,text}]
+let state=load();
+let who='';try{who=localStorage.getItem('cxb_who')||'';}catch(e){}
+function blank(){return {settings:{artist:'',manager:'',project:'',type:'single',date:'',preset:false,updatedAt:0},tasks:{},custom:{},plans:{},activity:[],view:'next',mode:'tasks',planKey:'ar'};}
+function migrate(s){ if(Array.isArray(s.custom)){const o={};s.custom.forEach(c=>{o[c.id]=Object.assign({updatedAt:1},c);});s.custom=o;} if(!s.activity)s.activity=[]; if(!s.plans)s.plans={}; if(s.settings.updatedAt==null)s.settings.updatedAt=0; return s;}
+function load(){
+  try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.settings)return migrate(Object.assign(blank(),s));}catch(e){}
+  try{const o=JSON.parse(localStorage.getItem('cxb_roadmap_v1'));if(o&&o.settings){const s=migrate(Object.assign(blank(),o));s.nextId=undefined;return s;}}catch(e){}
+  return blank();
+}
+function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+function newId(){return 'c'+now().toString(36)+Math.random().toString(36).slice(2,6);}
+
+// Merge helpers — every entity carries updatedAt; newer wins.
+function newer(a,b){return (b&&b.updatedAt||0)>(a&&a.updatedAt||0);}
+function mergeRemote(remote){
+  let changed=false;
+  if(remote.settings&&newer(state.settings,remote.settings)){state.settings=Object.assign({},state.settings,remote.settings);changed=true;}
+  if(remote.tasks)for(const id in remote.tasks){if(newer(state.tasks[id],remote.tasks[id])){state.tasks[id]=remote.tasks[id];changed=true;}}
+  if(remote.custom)for(const id in remote.custom){if(newer(state.custom[id],remote.custom[id])){state.custom[id]=remote.custom[id];changed=true;}}
+  if(remote.plans)for(const id in remote.plans){if(newer(state.plans[id],remote.plans[id])){state.plans[id]=remote.plans[id];changed=true;}}
+  if(remote.activity&&remote.activity.length){const seen=new Set(state.activity.map(a=>a.t+'|'+a.by+'|'+a.text));remote.activity.forEach(a=>{const k=a.t+'|'+a.by+'|'+a.text;if(!seen.has(k)){state.activity.push(a);seen.add(k);changed=true;}});state.activity.sort((a,b)=>b.t-a.t);state.activity=state.activity.slice(0,40);}
+  return changed;
+}
+function logAct(text){state.activity.unshift({t:now(),by:who||'Someone',text});state.activity=state.activity.slice(0,40);}
+
+// ================= SYNC LAYER =================
+// mode: 'local' | 'claude' (artifact db) | 'netlify' (function + blobs)
+const sync={mode:'local',room:'',status:'off',push(){},start(){}};
+function setSyncUI(){
+  const dot=$('#syncDot'),txt=$('#syncText'),room=$('#syncRoom');
+  dot.className='dot '+({live:'live',busy:'busy',err:'err',off:''}[sync.status]||'');
+  if(sync.mode==='local'){txt.textContent='Local only — progress saves in this browser';room.textContent='';$('#footNote').textContent='Progress saves in this browser. Use Backup / Restore to move it.';}
+  else if(sync.mode==='claude'){txt.textContent=sync.status==='live'?'Live sharing on — everyone who opens this page sees the same roadmap':sync.status==='err'?'Live sharing unavailable — working locally':'Connecting to live sharing…';room.textContent='';$('#footNote').textContent='Live shared roadmap. Changes save for everyone with access.';}
+  else{txt.textContent=sync.status==='live'?'Live sharing on · room':sync.status==='err'?'Sync error — retrying · room':'Syncing · room';room.textContent=sync.room;$('#footNote').textContent='Live shared roadmap. Anyone with this room code sees the same progress.';}
+}
+function pushPatch(patch){patch.activity=state.activity.slice(0,5);sync.push(patch);}
+
+// ---- Claude artifact db
+async function startClaude(db){
+  sync.mode='claude';sync.status='busy';setSyncUI();
+  const col=k=>db.collection(k), doc=p=>db.doc(p);
+  function applySnapTasks(kind,snap){const rem={};rem[kind]={};snap.docs.forEach(d=>{if(d.exists)rem[kind][d.id]=d.data();});if(mergeRemote(rem)){saveLocal();render();}}
+  col('tasks').onSnapshot(s=>applySnapTasks('tasks',s),e=>{sync.status='err';setSyncUI();});
+  col('custom').onSnapshot(s=>applySnapTasks('custom',s),e=>{sync.status='err';setSyncUI();});
+  col('plans').onSnapshot(s=>applySnapTasks('plans',s),e=>{sync.status='err';setSyncUI();});
+  doc('meta/settings').onSnapshot(s=>{if(s.exists&&mergeRemote({settings:s.data()})){saveLocal();bindSettings();render();}sync.status='live';setSyncUI();},e=>{sync.status='err';setSyncUI();});
+  doc('meta/activity').onSnapshot(s=>{if(s.exists&&mergeRemote({activity:s.data().items||[]})){saveLocal();render();}});
+  sync.push=async patch=>{
+    try{
+      const w=[];
+      if(patch.settings)w.push(doc('meta/settings').set(patch.settings));
+      if(patch.tasks)for(const id in patch.tasks)w.push(doc('tasks/'+id).set(patch.tasks[id]));
+      if(patch.custom)for(const id in patch.custom)w.push(doc('custom/'+id).set(patch.custom[id]));
+      if(patch.plans)for(const id in patch.plans)w.push(doc('plans/'+id).set(patch.plans[id]));
+      if(patch.activity)w.push(doc('meta/activity').set({items:state.activity.slice(0,40)}));
+      await Promise.all(w);sync.status='live';
+    }catch(e){sync.status='err';toast('Could not sync that change — it is saved on this device');}
+    setSyncUI();
+  };
+  // first-time seed: if remote is empty and local has progress, push everything
+  const first=await doc('meta/settings').get();
+  if(!first.exists&&(state.settings.date||Object.keys(state.tasks).length)){state.settings.updatedAt=state.settings.updatedAt||now();sync.push({settings:state.settings,tasks:state.tasks,custom:state.custom,plans:state.plans,activity:true});}
+}
+
+// ---- Netlify function + blobs
+const NF='/.netlify/functions/roadmap';
+async function probeNetlify(){
+  if(!/^https?:$/.test(location.protocol))return false;
+  try{const r=await fetch(NF+'?ping=1',{cache:'no-store'});if(!r.ok)return false;const j=await r.json();return j&&j.ok===true;}catch(e){return false;}
+}
+function startNetlify(){
+  sync.mode='netlify';
+  const url=new URL(location.href);let room=url.searchParams.get('room')||'';
+  try{if(!room)room=localStorage.getItem('cxb_room')||'';}catch(e){}
+  if(!room){room='CXB-'+Math.random().toString(36).slice(2,6).toUpperCase()+'-'+Math.random().toString(36).slice(2,6).toUpperCase();}
+  try{localStorage.setItem('cxb_room',room);}catch(e){}
+  sync.room=room;sync.status='busy';setSyncUI();
+  $('#btnRoom').hidden=false;$('#btnShare').hidden=false;$('#selRoom').hidden=false;$('#btnNewRel').hidden=false;
+  registerRoom(room);renderRooms();
+  let timer=null,inflight=false;
+  async function pull(){
+    if(inflight)return;inflight=true;
+    try{const r=await fetch(NF+'?room='+encodeURIComponent(sync.room),{cache:'no-store'});if(!r.ok)throw 0;const j=await r.json();
+      if(j.state&&mergeRemote(j.state)){saveLocal();bindSettings();render();}
+      // if the room is empty and we have local progress, seed it
+      if(j.empty&&(state.settings.date||Object.keys(state.tasks).length)){state.settings.updatedAt=state.settings.updatedAt||now();await push({settings:state.settings,tasks:state.tasks,custom:state.custom,plans:state.plans,activity:true});}
+      sync.status='live';
+    }catch(e){sync.status='err';}
+    inflight=false;setSyncUI();
+  }
+  async function push(patch){
+    try{const r=await fetch(NF,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({room:sync.room,patch:{settings:patch.settings,tasks:patch.tasks,custom:patch.custom,plans:patch.plans,activity:patch.activity?state.activity.slice(0,40):undefined}})});
+      if(!r.ok)throw 0;const j=await r.json();if(j.state&&mergeRemote(j.state)){saveLocal();bindSettings();render();}sync.status='live';
+    }catch(e){sync.status='err';toast('Could not sync that change — it is saved on this device');}
+    setSyncUI();
+  }
+  sync.push=push;
+  function schedule(){clearInterval(timer);timer=setInterval(()=>{if(document.visibilityState==='visible')pull();},12000);}
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')pull();});
+  window.addEventListener('focus',pull);
+  pull();schedule();
+  function switchRoom(code,msg){sync.room=code;try{localStorage.setItem('cxb_room',code);}catch(e){}registerRoom(code);state=blank();saveLocal();bindSettings();calMonth=null;setSyncUI();renderRooms();render();toast(msg);pull();}
+  $('#btnRoom').onclick=()=>{const v=prompt('Room code. Everyone using the same code shares one roadmap.\nEnter the code someone sent you:',sync.room);if(!v)return;const code=v.trim().toUpperCase();if(code===sync.room)return;switchRoom(code,'Joined room '+code);};
+  $('#btnNewRel').onclick=()=>{const code='CXB-'+Math.random().toString(36).slice(2,6).toUpperCase()+'-'+Math.random().toString(36).slice(2,6).toUpperCase();switchRoom(code,'New release started — set the title and date');};
+  $('#selRoom').addEventListener('change',()=>{const code=$('#selRoom').value;if(code&&code!==sync.room)switchRoom(code,'Switched to '+code);});
+  sync.renderRooms=renderRooms;
+  $('#btnShare').onclick=()=>{const u=new URL(location.href);u.searchParams.set('room',sync.room);const s=u.toString();if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(s).then(()=>toast('Share link copied — send it to your team'),()=>prompt('Copy this link:',s));}else prompt('Copy this link:',s);};
+}
+
+// Label roster: rooms this browser knows about (one room = one release)
+function rooms(){try{return JSON.parse(localStorage.getItem('cxb_rooms')||'[]');}catch(e){return [];}}
+function registerRoom(code){const r=rooms();if(!r.find(x=>x.code===code))r.push({code,name:''});try{localStorage.setItem('cxb_rooms',JSON.stringify(r));}catch(e){}}
+function renderRooms(){if(sync.mode!=='netlify')return;const r=rooms();const cur=r.find(x=>x.code===sync.room);if(cur){const s=state.settings;cur.name=[s.artist,s.project].filter(Boolean).join(' — ')||'';cur.date=s.date||'';try{localStorage.setItem('cxb_rooms',JSON.stringify(r));}catch(e){}}
+  $('#selRoom').innerHTML=r.map(x=>`<option value="${x.code}" ${x.code===sync.room?'selected':''}>${esc(x.name||'Untitled release')}${x.date?' · '+fmt(parseDate(x.date)):''} · ${x.code}</option>`).join('');}
+async function initSync(){
+  setSyncUI();
+  if(window.claude&&typeof window.claude.use==='function'){
+    try{const db=await window.claude.use('db');if(db){startClaude(db);return;}}catch(e){}
+  }
+  if(await probeNetlify()){startNetlify();return;}
+  sync.mode='local';sync.status='off';setSyncUI();
+}
+
+// ================= DATES =================
+const DAY=86400000;
+function parseDate(s){if(!s)return null;const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);}
+function fmt(d){return d?d.toLocaleDateString('en-US',{month:'short',day:'numeric'}):'—';}
+function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function today(){const t=new Date();return new Date(t.getFullYear(),t.getMonth(),t.getDate());}
+function addDays(d,n){return new Date(d.getFullYear(),d.getMonth(),d.getDate()+n);}
+function relDate(off){const r=parseDate(state.settings.date);if(!r)return null;const k=SCALE[state.settings.type]||1;const n=off<0?Math.round(off*k):off;return addDays(r,n);}
+function relLabel(off){const k=SCALE[state.settings.type]||1;const n=off<0?Math.round(off*k):off;return n===0?'T-0':(n<0?'T'+n:'T+'+n);}
+function startToday(){let d=addDays(today(),RUNWAY[state.settings.type]||90);while(d.getDay()!==5)d=addDays(d,1);return iso(d);}
+function ago(t){const s=Math.round((now()-t)/1000);if(s<60)return 'just now';if(s<3600)return Math.round(s/60)+'m ago';if(s<86400)return Math.round(s/3600)+'h ago';return Math.round(s/86400)+'d ago';}
+
+// ================= TASKS =================
+function allTasks(){
+  const base=TASKS.map(t=>({id:t[0],area:t[1],priority:t[2],start:t[3],end:t[4],title:t[5],ideas:t[6],custom:false}));
+  const cust=Object.values(state.custom||{}).filter(c=>!c.deleted).map(c=>Object.assign({custom:true},c));
+  return base.concat(cust).map(t=>{
+    const o=state.tasks[t.id]||{};
+    const m=Object.assign({},t,o.edit||{});
+    m.status=o.status||'todo';m.notes=o.notes||'';m.owner=o.owner||'';m.edited=!!o.edit;m.updatedAt=o.updatedAt||0;m.by=o.by||'';
+    m.startDate=relDate(m.start);m.dueDate=relDate(m.end);
+    m.cxb=(state.settings.preset&&PRESET_CXB.notes[t.id])||'';
+    return m;
+  });
+}
+function phaseOf(t){const s=t.start;return PHASES.find(p=>s>=p.range[0]&&s<=p.range[1])||PHASES[3];}
+function dueState(t){if(!t.dueDate||t.status==='done'||t.status==='skip')return '';const d=Math.round((t.dueDate-today())/DAY);if(d<0)return 'overdue';if(d<=7)return 'soon';return '';}
+function ownerName(k){if(k==='artist')return state.settings.artist||'Artist';if(k==='manager')return state.settings.manager||'Manager';if(k==='both')return 'Both';return '';}
+function writeTask(id,fields,actText){
+  const cur=state.tasks[id]||{};state.tasks[id]=Object.assign({},cur,fields,{updatedAt:now(),by:who||'Someone'});
+  if(actText)logAct(actText);
+  saveLocal();const p={tasks:{}};p.tasks[id]=state.tasks[id];pushPatch(p);render();
+}
+function writeSettings(){state.settings.updatedAt=now();saveLocal();pushPatch({settings:state.settings});renderRooms();render();}
+function writeCustom(c,actText){c.updatedAt=now();c.by=who||'Someone';state.custom[c.id]=c;if(actText)logAct(actText);saveLocal();const p={custom:{}};p.custom[c.id]=c;pushPatch(p);render();}
+
+// ================= FILTERS =================
+function filtered(){
+  const q=$('#q').value.trim().toLowerCase(),a=$('#fArea').value,p=$('#fPri').value,s=$('#fStatus').value,o=$('#fOwn').value;
+  return allTasks().filter(t=>{
+    if(a&&t.area!==a)return false;if(p&&t.priority!==p)return false;if(o&&t.owner!==o)return false;
+    if(s==='open'){if(t.status==='done'||t.status==='skip')return false}else if(s&&t.status!==s)return false;
+    if(q&&!(t.title+' '+t.ideas+' '+t.notes+' '+t.cxb).toLowerCase().includes(q))return false;
+    return true;
+  });
+}
+
+// ================= RENDER =================
+function renderStats(){
+  const all=allTasks(),active=all.filter(t=>t.status!=='skip'),done=active.filter(t=>t.status==='done');
+  const pct=active.length?Math.round(done.length/active.length*100):0;
+  $('#sProg').innerHTML=pct+'<small>%</small>';$('#sBar').style.width=pct+'%';
+  $('#sDone').innerHTML=done.length+'<small>/'+active.length+'</small>';
+  $('#sOver').textContent=all.filter(t=>dueState(t)==='overdue').length;
+  $('#sWeek').textContent=all.filter(t=>dueState(t)==='soon').length;
+  const r=parseDate(state.settings.date);
+  if(!r){$('#sCount').textContent='—';$('#sMeta').textContent='Set a release date to build your deadlines.';return;}
+  const d=Math.round((r-today())/DAY);
+  $('#sCount').innerHTML=d>0?'<b>'+d+'</b> DAYS OUT':d===0?'<b>RELEASE DAY</b>':'<b>'+Math.abs(d)+'</b> DAYS LIVE';
+  const s=state.settings;
+  $('#sMeta').textContent=[s.artist,s.project].filter(Boolean).join(' — ')+(s.artist||s.project?' · ':'')+({single:'Single',ep:'EP',album:'Album',mixtape:'Mixtape'}[s.type])+' · drops '+r.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'});
+}
+function row(t){
+  const ds=dueState(t);
+  return `<div class="row ${t.status} ${ds}" data-id="${t.id}">
+    <span class="st ${t.status}" title="${STATUS[t.status]} — click to toggle done"></span>
+    <span class="id">${t.custom?'C':'#'+String(t.id).padStart(3,'0')}</span>
+    <div class="title">${esc(t.title)} ${t.cxb?'<span class="cxb">CXB</span>':''}${t.custom?'<span class="chip">custom</span>':''}<span class="sub">${esc(t.ideas)}</span></div>
+    <span class="area"><span class="chip">${AREAS[t.area]?AREAS[t.area].short:t.area}</span></span>
+    <span class="pri-cell"><span class="pri ${t.priority}">${t.priority}</span></span>
+    <span class="own-cell">${t.owner?'<span class="chip own">'+esc(ownerName(t.owner))+'</span>':'<span class="chip" style="opacity:.4">—</span>'}</span>
+    <span class="due">${t.dueDate?fmt(t.startDate)+' → '+fmt(t.dueDate):relLabel(t.start)+' → '+relLabel(t.end)}<small>${t.dueDate?relLabel(t.start)+' → '+relLabel(t.end):'set a release date'}</small></span>
+    <span class="more">›</span></div>`;
+}
+const hdr=`<div class="hdr"><span></span><span>#</span><span>Task</span><span>Area</span><span>Priority</span><span>Owner</span><span>Window</span><span></span></div>`;
+function viewList(ts){
+  if(!ts.length)return '<div class="empty">No tasks match these filters.</div>';
+  let h='';
+  PHASES.forEach(p=>{
+    const g=ts.filter(t=>phaseOf(t)===p).sort((a,b)=>a.start-b.start||a.end-b.end||String(a.id).localeCompare(String(b.id)));
+    if(!g.length)return;
+    const done=g.filter(t=>t.status==='done').length;
+    h+=`<div class="phase"><h2><em>${p.key}</em>${p.name}</h2><span class="blurb">${p.blurb}</span><span class="cnt">${done}/${g.length} done</span></div>`+hdr+g.map(row).join('');
+  });
+  return h;
+}
+function card(t){const ds=dueState(t);return `<div class="card ${t.status} ${ds}" data-id="${t.id}"><div class="t">${esc(t.title)}</div><div class="m"><span class="pri ${t.priority}">${t.priority}</span><span class="chip">${AREAS[t.area]?AREAS[t.area].short:t.area}</span>${t.owner?'<span class="chip own">'+esc(ownerName(t.owner))+'</span>':''}<span class="d">${t.dueDate?'due '+fmt(t.dueDate):relLabel(t.end)}</span>${t.cxb?'<span class="cxb">CXB</span>':''}</div></div>`;}
+function board(groups){return '<div class="board">'+groups.map(g=>`<div class="col"><div class="col-bar" style="background:${g.color}"></div><h3>${esc(g.name)}<span>${g.items.length}</span></h3>${g.items.map(card).join('')||'<div class="empty" style="border:0">—</div>'}</div>`).join('')+'</div>';}
+const byDue=(a,b)=>(a.dueDate&&b.dueDate?a.dueDate-b.dueDate:a.end-b.end)||a.start-b.start;
+function viewStatus(ts){return board(Object.keys(STATUS).map(k=>({name:STATUS[k],color:{todo:'#3A3A3A',doing:'#D4A017',done:'#3FA36B',skip:'#6B6B6B'}[k],items:ts.filter(t=>t.status===k).sort(byDue)})));}
+function viewArea(ts){return board(Object.keys(AREAS).map(k=>({name:AREAS[k].name,color:'#D4A017',items:ts.filter(t=>t.area===k).sort(byDue)})));}
+function viewPriority(ts){return board([['High','#B5121B'],['Medium','#D4A017'],['Low','#6B6B6B']].map(([p,c])=>({name:p+' priority',color:c,items:ts.filter(t=>t.priority===p).sort(byDue)})));}
+function viewOwner(ts){return board([['artist','#D4A017'],['manager','#B5121B'],['both','#C9C4BA'],['','#3A3A3A']].map(([k,c])=>({name:k?ownerName(k):'Unassigned',color:c,items:ts.filter(t=>(t.owner||'')===k).sort(byDue)})));}
+
+let calMonth=null;
+function viewCalendar(ts){
+  const r=parseDate(state.settings.date);
+  if(!r)return '<div class="empty">Set a release date to see the calendar.</div>';
+  if(!calMonth){const t=today();const anchor=(t<r&&t>addDays(r,-95))?t:r;calMonth=new Date(anchor.getFullYear(),anchor.getMonth(),1);}
+  const y=calMonth.getFullYear(),m=calMonth.getMonth();
+  const first=new Date(y,m,1),start=addDays(first,-first.getDay());
+  const byDay={};ts.forEach(t=>{if(!t.dueDate)return;const k=iso(t.dueDate);(byDay[k]=byDay[k]||[]).push(t);});
+  let h=`<div class="cal-head"><button class="btn sm" data-cal="-1">‹ Prev</button><h3>${first.toLocaleDateString('en-US',{month:'long',year:'numeric'})}</h3><button class="btn sm" data-cal="1">Next ›</button><button class="btn sm" data-cal="rel">Release month</button><button class="btn sm" data-cal="now">This month</button><span class="help" style="margin:0 0 0 auto">Tasks shown on their deadline day</span></div><div class="cal">`;
+  ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(d=>h+=`<div class="dow">${d}</div>`);
+  const tk=iso(today()),rk=iso(r),pw={High:0,Medium:1,Low:2};
+  for(let i=0;i<42;i++){
+    const d=addDays(start,i),k=iso(d),ev=(byDay[k]||[]).sort((a,b)=>pw[a.priority]-pw[b.priority]);
+    h+=`<div class="day ${d.getMonth()!==m?'out':''} ${k===tk?'today':''} ${k===rk?'rel':''}"><div class="n"><span>${d.getDate()}</span></div>`;
+    ev.slice(0,4).forEach(t=>h+=`<div class="ev ${t.priority} ${t.status}" data-id="${t.id}" title="${esc(t.title)}">${esc(t.title)}</div>`);
+    if(ev.length>4)h+=`<div class="morelink" data-day="${k}">+${ev.length-4} more</div>`;
+    h+='</div>';
+  }
+  return h+'</div>';
+}
+function viewNext(ts){
+  const r=parseDate(state.settings.date);
+  const open=ts.filter(t=>t.status!=='done'&&t.status!=='skip');
+  const act=`<div class="col act"><h3>Recent activity<span>${state.activity.length}</span></h3>${state.activity.slice(0,12).map(a=>`<div class="actrow"><b>${esc(a.by)}</b> ${esc(a.text)}<span class="w">${ago(a.t)}</span></div>`).join('')||'<div class="empty" style="border:0">No changes yet.</div>'}</div>`;
+  if(!r)return `<div class="next-hero" data-id="none"><div><div class="lbl">Step one</div><h2>Set your release date</h2><p>Every deadline is built from it. Hit Start today to run the full plan from this week, or pick a Friday yourself. Then load the Kid Cxbra preset or fill in the artist and project.</p></div></div>`+viewList(open.slice(0,8));
+  const pw={High:0,Medium:1,Low:2},t0=today();
+  const srt=(a,b)=>a.dueDate-b.dueDate||pw[a.priority]-pw[b.priority];
+  const overdue=open.filter(t=>t.dueDate<t0).sort(srt);
+  const week=open.filter(t=>t.dueDate>=t0&&t.dueDate<=addDays(t0,7)).sort(srt);
+  const later=open.filter(t=>t.dueDate>addDays(t0,7)).sort(srt).slice(0,12);
+  const pool=overdue.length?overdue:(week.length?week:later);
+  const next=pool.slice().sort((a,b)=>pw[a.priority]-pw[b.priority]||a.dueDate-b.dueDate)[0];
+  let h='';
+  if(next){
+    const d=Math.round((next.dueDate-t0)/DAY);
+    const why=overdue.length?`${Math.abs(d)} day${Math.abs(d)===1?'':'s'} overdue and the highest priority thing that is late.`:week.length?`Due in ${d} day${d===1?'':'s'} and the highest priority thing this week.`:`Next deadline on the board.`;
+    h+=`<div class="next-hero" data-id="${next.id}"><div><div class="lbl">CXB Next Move</div><h2>${esc(next.title)}</h2><p>${esc(next.ideas)}</p><div class="why">${why} · ${AREAS[next.area].name} · ${next.priority} priority${next.owner?' · '+esc(ownerName(next.owner)):''}</div></div><div class="big">${d<0?'-'+Math.abs(d):d}<small>days ${d<0?'late':'left'}</small></div></div>`;
+  } else h+=`<div class="next-hero" data-id="none"><div><div class="lbl">CXB Next Move</div><h2>Board is clear</h2><p>Nothing open matches your filters. Clear the filters, or start the next roadmap.</p></div></div>`;
+  h+='<div class="next-grid">'+[{name:'Overdue',cls:'overdue',items:overdue},{name:'This week',cls:'week',items:week},{name:'Coming up',cls:'later',items:later}].map(g=>`<div class="col ${g.cls}"><h3>${g.name}<span>${g.items.length}</span></h3>${g.items.map(card).join('')||'<div class="empty" style="border:0">Nothing here.</div>'}</div>`).join('')+act+'</div>';
+  return h;
+}
+function render(){
+  renderStats();
+  const mode=state.mode||'tasks';
+  document.querySelectorAll('#mode button').forEach(b=>b.classList.toggle('on',b.dataset.m===mode));
+  $('#views').style.display=mode==='tasks'?'':'none';document.querySelector('.filters').style.display=mode==='tasks'?'':'none';
+  if(mode==='plans'){$('#main').innerHTML=renderPlans();return;}
+  const ts=filtered();const v=state.view||'next';
+  document.querySelectorAll('#views button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
+  $('#main').innerHTML={next:viewNext,list:viewList,status:viewStatus,area:viewArea,priority:viewPriority,owner:viewOwner,calendar:viewCalendar}[v](ts);
+}
+
+// ================= MODAL =================
+function openTask(id){
+  const t=allTasks().find(x=>String(x.id)===String(id));if(!t)return;
+  const areaOpts=Object.keys(AREAS).map(k=>`<option value="${k}" ${t.area===k?'selected':''}>${AREAS[k].name}</option>`).join('');
+  $('#modal').innerHTML=`<header><div><div class="eyebrow"><span>${t.custom?'Custom task':'Task #'+String(t.id).padStart(3,'0')}</span><span class="chip">${AREAS[t.area].short}</span><span class="pri ${t.priority}">${t.priority}</span><span>${relLabel(t.start)} → ${relLabel(t.end)}${t.dueDate?' · '+fmt(t.startDate)+' → '+fmt(t.dueDate):''}</span></div><h2>${esc(t.title)}</h2></div><button class="x" id="mClose" aria-label="Close">×</button></header>
+  <div class="body">
+    <div class="ideas"><div class="lbl">Ideas &amp; how to do it</div><p>${esc(t.ideas)}</p>${t.cxb?`<div class="note"><div class="lbl">CXB note</div>${esc(t.cxb)}</div>`:''}</div>
+    <div class="field"><label>Status</label><div class="status-row" id="mStatus">${Object.keys(STATUS).map(k=>`<button data-s="${k}" class="${t.status===k?'on '+k:''}">${STATUS[k]}</button>`).join('')}</div></div>
+    <div class="grid2">
+      <div class="field"><label for="mOwner">Owner</label><select id="mOwner"><option value="">Unassigned</option>${Object.keys(OWNERS).map(k=>`<option value="${k}" ${t.owner===k?'selected':''}>${esc(ownerName(k))}</option>`).join('')}</select></div>
+      <div class="field"><label>Last change</label><div class="stamp" style="padding:10px 0">${t.updatedAt?esc(t.by)+' · '+ago(t.updatedAt):'—'}</div></div>
+    </div>
+    <div class="field"><label for="mNotes">Notes (shared)</label><textarea id="mNotes" rows="3" placeholder="Links, names, what you decided…">${esc(t.notes)}</textarea></div>
+    <details ${t.custom?'open':''}><summary class="help" style="cursor:pointer">Edit task details</summary>
+      <div style="display:grid;gap:12px;margin-top:10px">
+        <div class="field"><label for="eTitle">Title</label><input id="eTitle" value="${esc(t.title)}"></div>
+        <div class="field"><label for="eIdeas">Ideas</label><textarea id="eIdeas" rows="3">${esc(t.ideas)}</textarea></div>
+        <div class="grid2"><div class="field"><label for="eArea">Work area</label><select id="eArea">${areaOpts}</select></div><div class="field"><label for="ePri">Priority</label><select id="ePri">${['High','Medium','Low'].map(p=>`<option ${t.priority===p?'selected':''}>${p}</option>`).join('')}</select></div></div>
+        <div class="grid2"><div class="field"><label for="eStart">Start (days from release, negative = before)</label><input id="eStart" type="number" value="${t.start}"></div><div class="field"><label for="eEnd">Deadline (days from release)</label><input id="eEnd" type="number" value="${t.end}"></div></div>
+      </div></details>
+  </div>
+  <footer><div style="display:flex;gap:8px">${t.custom?'<button class="btn sm danger" id="mDelete">Delete task</button>':(t.edited?'<button class="btn sm" id="mRevert">Revert edits</button>':'')}</div><div style="display:flex;gap:8px"><button class="btn sm" id="mCancel">Close</button><button class="btn sm gold" id="mSave">Save</button></div></footer>`;
+  $('#overlay').classList.add('open');
+  $('#mStatus').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;document.querySelectorAll('#mStatus button').forEach(x=>x.className='');b.className='on '+b.dataset.s;});
+  $('#mClose').onclick=$('#mCancel').onclick=closeModal;
+  $('#mSave').onclick=()=>{
+    const id=t.id;const sb=document.querySelector('#mStatus button.on');const st=sb?sb.dataset.s:'todo';
+    const edit={title:$('#eTitle').value.trim()||t.title,ideas:$('#eIdeas').value,area:$('#eArea').value,priority:$('#ePri').value,start:parseInt($('#eStart').value)||0,end:parseInt($('#eEnd').value)||0};
+    if(edit.end<edit.start)edit.end=edit.start;
+    const fields={status:st,notes:$('#mNotes').value,owner:$('#mOwner').value};
+    if(t.custom){const c=Object.assign({},state.custom[id],edit);writeCustom(c);}
+    else{const b=TASKS.find(x=>x[0]===id);const same=edit.title===b[5]&&edit.ideas===b[6]&&edit.area===b[1]&&edit.priority===b[2]&&edit.start===b[3]&&edit.end===b[4];fields.edit=same?null:edit;}
+    let act='';if(st!==t.status)act=(st==='done'?'completed':st==='doing'?'started':st==='skip'?'skipped':'reopened')+' "'+edit.title+'"';else if(fields.owner!==t.owner&&fields.owner)act='assigned "'+edit.title+'" to '+ownerName(fields.owner);else act='updated "'+edit.title+'"';
+    writeTask(id,fields,act);closeModal();toast('Saved');
+  };
+  const del=$('#mDelete');if(del)del.onclick=()=>{if(!confirm('Delete this custom task?'))return;const c=Object.assign({},state.custom[t.id],{deleted:true});writeCustom(c,'deleted "'+t.title+'"');closeModal();toast('Task deleted');};
+  const rev=$('#mRevert');if(rev)rev.onclick=()=>{writeTask(t.id,{edit:null},'reverted "'+t.title+'"');closeModal();toast('Reverted to the original task');};
+}
+function closeModal(){$('#overlay').classList.remove('open');}
+function addCustom(){const c={id:newId(),title:'New task',ideas:'',area:'PM',priority:'Medium',start:-30,end:-25,deleted:false};writeCustom(c,'added a custom task');openTask(c.id);}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),2200);}
+
+// ================= EXPORT =================
+function csv(){
+  const rows=[['id','phase','area','priority','owner','status','title','start_offset','deadline_offset','start_date','deadline','ideas','cxb_note','notes','last_changed_by']];
+  allTasks().sort((a,b)=>a.start-b.start).forEach(t=>rows.push([t.id,phaseOf(t).name,AREAS[t.area].name,t.priority,ownerName(t.owner),STATUS[t.status],t.title,t.start,t.end,t.startDate?iso(t.startDate):'',t.dueDate?iso(t.dueDate):'',t.ideas,t.cxb,t.notes,t.by]));
+  const s=rows.map(r=>r.map(v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"').join(',')).join('\r\n');
+  download((state.settings.artist||'release').replace(/\W+/g,'_').toLowerCase()+'_roadmap.csv','text/csv',s);
+}
+function backup(){download('cxb_roadmap_backup_'+iso(today())+'.json','application/json',JSON.stringify(state));}
+let dl=null;if(window.claude&&typeof window.claude.use==='function'){window.claude.use('downloads').then(d=>{dl=d;}).catch(()=>{});}
+function download(name,type,data){
+  if(dl){dl.save({filename:name,data}).then(()=>toast('Saved '+name)).catch(e=>{if(e&&e.code==='declined')return;toast('Could not save the file');});return;}
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
+}
+function printRoadmap(){
+  const s=state.settings,r=parseDate(s.date);
+  let h=`<h1>${esc(s.artist||'Artist')}${s.project?' — '+esc(s.project):''}</h1><div class="meta">CXB Ready Release Roadmap · ${({single:'Single',ep:'EP',album:'Album',mixtape:'Mixtape'}[s.type])}${r?' · releases '+r.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}):''} · printed ${today().toLocaleDateString()}</div>`;
+  const ts=allTasks().filter(t=>t.status!=='skip');
+  PHASES.forEach(p=>{const g=ts.filter(t=>phaseOf(t)===p).sort((a,b)=>a.start-b.start);if(!g.length)return;
+    h+=`<h2>${p.key} · ${p.name}</h2><table><tr><th></th><th>Window</th><th>Task</th><th>Area</th><th>Owner</th><th>Pri</th></tr>`;
+    g.forEach(t=>h+=`<tr><td><span class="box ${t.status==='done'?'done':''}"></span></td><td class="m">${t.dueDate?fmt(t.startDate)+' → '+fmt(t.dueDate):relLabel(t.start)+' → '+relLabel(t.end)}</td><td><b>${esc(t.title)}</b><span class="i">${esc(t.ideas)}</span>${t.cxb?'<span class="n">CXB: '+esc(t.cxb)+'</span>':''}${t.notes?'<span class="i">Notes: '+esc(t.notes)+'</span>':''}</td><td class="m">${AREAS[t.area].short}</td><td class="m">${esc(ownerName(t.owner))}</td><td class="m">${t.priority}</td></tr>`);
+    h+='</table>';});
+  h+=planPrint();
+  $('#printView').innerHTML=h;window.print();
+}
+
+// ================= WIRING =================
+function bindSettings(){
+  const s=state.settings;$('#fArtist').value=s.artist||'';$('#fManager').value=s.manager||'';$('#fProject').value=s.project||'';$('#fType').value=s.type||'single';$('#fDate').value=s.date||'';
+  $('#btnPreset').textContent=s.preset?'Kid Cxbra preset · on':'Kid Cxbra preset';$('#who').value=who;
+}
+let setT=null;
+[['fArtist','artist'],['fManager','manager'],['fProject','project'],['fType','type'],['fDate','date']].forEach(([id,k])=>$('#'+id).addEventListener('input',()=>{state.settings[k]=$('#'+id).value;if(k==='date')calMonth=null;clearTimeout(setT);setT=setTimeout(writeSettings,400);renderStats();}));
+$('#who').addEventListener('input',()=>{who=$('#who').value.trim();try{localStorage.setItem('cxb_who',who);}catch(e){}});
+$('#btnToday').onclick=()=>{state.settings.date=startToday();calMonth=null;logAct('set the release date to '+state.settings.date);writeSettings();bindSettings();toast('Release date set — first tasks start this week');};
+$('#btnPreset').onclick=()=>{
+  const s=state.settings;
+  if(s.preset){s.preset=false;toast('Preset off');}
+  else{s.preset=true;if(!s.artist)s.artist=PRESET_CXB.artist;if(!s.date){s.date=startToday();calMonth=null;}toast('Kid Cxbra preset loaded — CXB notes added to 23 tasks');}
+  writeSettings();bindSettings();
+};
+$('#views').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;state.view=b.dataset.v;saveLocal();render();});
+$('#mode').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;state.mode=b.dataset.m;saveLocal();render();});
+['q','fArea','fPri','fOwn','fStatus'].forEach(id=>$('#'+id).addEventListener('input',render));
+$('#fArea').innerHTML+=Object.keys(AREAS).map(k=>`<option value="${k}">${AREAS[k].name}</option>`).join('');
+$('#main').addEventListener('click',e=>{
+  const c=e.target.closest('[data-cal]');if(c){const v=c.dataset.cal;const r=parseDate(state.settings.date);if(v==='rel')calMonth=new Date(r.getFullYear(),r.getMonth(),1);else if(v==='now'){const t=today();calMonth=new Date(t.getFullYear(),t.getMonth(),1);}else calMonth=new Date(calMonth.getFullYear(),calMonth.getMonth()+parseInt(v),1);render();return;}
+  const m=e.target.closest('[data-day]');if(m){$('#q').value='';$('#fStatus').value='';state.view='list';saveLocal();render();toast('Showing list — tasks due '+m.dataset.day);return;}
+  const st=e.target.closest('.st');if(st){const id=st.closest('[data-id]').dataset.id;const t=allTasks().find(x=>String(x.id)===id);const ns=t.status==='done'?'todo':'done';writeTask(t.id,{status:ns},(ns==='done'?'completed':'reopened')+' "'+t.title+'"');e.stopPropagation();return;}
+  const el=e.target.closest('[data-id]');if(el&&el.dataset.id!=='none')openTask(el.dataset.id);
+});
+$('#overlay').addEventListener('click',e=>{if(e.target===$('#overlay'))closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+$('#btnAdd').onclick=addCustom;$('#btnCsv').onclick=csv;$('#btnPrint').onclick=printRoadmap;$('#btnBackup').onclick=backup;
+$('#btnRestore').onclick=()=>$('#fileRestore').click();
+$('#fileRestore').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{try{const s=JSON.parse(rd.result);if(!s.settings)throw 0;state=migrate(Object.assign(blank(),s));const t=now();state.settings.updatedAt=t;for(const id in state.tasks)state.tasks[id].updatedAt=t;for(const id in state.custom)state.custom[id].updatedAt=t;for(const id in state.plans)state.plans[id].updatedAt=t;saveLocal();bindSettings();calMonth=null;render();pushPatch({settings:state.settings,tasks:state.tasks,custom:state.custom,plans:state.plans});toast('Backup restored');}catch(err){toast('That file is not a roadmap backup');}};rd.readAsText(f);e.target.value='';});
+$('#btnReset').onclick=()=>{
+  const shared=sync.mode!=='local';
+  if(!confirm(shared?'Reset the SHARED roadmap for everyone? This clears the release date, statuses, notes, owners, custom tasks, and all playbooks.':'Reset everything on this device?'))return;
+  const t=now();const tasks={};for(const id in state.tasks)tasks[id]={status:'todo',notes:'',owner:'',edit:null,updatedAt:t,by:who||'Someone'};
+  const custom={};for(const id in state.custom)custom[id]=Object.assign({},state.custom[id],{deleted:true,updatedAt:t});
+  const plans={};for(const id in state.plans)plans[id]={v:{},updatedAt:t,by:who||'Someone'};
+  const fresh=blank();fresh.settings.updatedAt=t;fresh.tasks=tasks;fresh.custom=custom;fresh.plans=plans;fresh.activity=[{t,by:who||'Someone',text:'reset the roadmap'}];
+  state=fresh;saveLocal();bindSettings();calMonth=null;render();pushPatch({settings:state.settings,tasks,custom,plans,activity:true});toast('Roadmap reset');
+};
+
+// ================= PLAYBOOKS =================
+// Each playbook: {key,name,blurb,sections:[{title,help,fields:[...]}]}
+// field types: text, textarea, number, select(opts), check, table(cols), calendar, kpi
+const PLAN_ORDER=['ar','marketing','calendar','budget','distribution','copyright','royalty','publishing','playlist','pr','fans','post'];
+const PLANS={
+ar:{name:'A&R Analysis',short:'A&R',blurb:'Judge the music before you spend a dollar promoting it. Be harder on it than a stranger would be.',sections:[
+ {title:'The project',fields:[
+  {id:'thesis',t:'text',l:'One-line thesis',p:'What this project is about and who it is for'},
+  {id:'lane',t:'text',l:'Lane / sub-genre',p:'e.g. melodic dark trap, boom-bap, drill'},
+  {id:'comps',t:'text',l:'Three comparable artists (for pitching)',p:'Artists whose listeners would like this'},
+  {id:'diff',t:'textarea',l:'What is different about it',p:'The thing a listener could not get from those three artists'}]},
+ {title:'Track scorecard',help:'Score every track honestly. The lead single is the highest hook score with a strong first 15 seconds, not your favorite.',fields:[
+  {id:'tracks',t:'table',cols:[{k:'title',l:'Track',t:'text'},{k:'bpm',l:'BPM',t:'number',w:70},{k:'mood',l:'Mood',t:'text'},{k:'first15',l:'First 15s (1-5)',t:'number',w:90},{k:'hook',l:'Hook (1-5)',t:'number',w:80},{k:'lyric',l:'Best lyric / moment',t:'text'},{k:'role',l:'Role',t:'select',opts:['Lead single','Second single','Album cut','Interlude','Bonus','Cut it']},{k:'notes',l:'Notes',t:'text'}]}]},
+ {title:'CXB A&R Score',help:'Score the release 0-10 on each line after it has been out at least 7 days. Numbers come from Spotify for Artists, Apple Music for Artists, YouTube Studio, TikTok analytics, your email tool, and your store. Nothing here is automatic — you enter the numbers, the score tells you what to do.',fields:[{id:'score',t:'arscore'}]},
+ {title:'Verdict',fields:[
+  {id:'focus',t:'text',l:'Focus track',p:'The one that carries ads, teasers, and playlist pitches'},
+  {id:'weak',t:'textarea',l:'Weakest element and the fix',p:'Mix, a verse, the intro, the feature, the title…'},
+  {id:'features',t:'text',l:'Feature / remix candidates',p:'Who could take the lead single further'},
+  {id:'verdict',t:'select',l:'Release decision',opts:['Ready — go','Ready after fixes above','Not ready — push the date']}]}]},
+
+marketing:{name:'Marketing Plan',short:'Marketing',blurb:'One page that says who you are talking to, what you are saying, where, and how often. Everything else hangs off it.',sections:[
+ {title:'Positioning',fields:[
+  {id:'position',t:'textarea',l:'Positioning statement',p:'For [listener], [artist] is the [lane] artist who [what only you do]. Unlike [comps], [difference].'},
+  {id:'message',t:'text',l:'Core message for this release',p:'One sentence the whole campaign repeats'},
+  {id:'pillars',t:'text',l:'Content pillars (3-5)',p:'e.g. behind the scenes, lyric breakdowns, fan proof, performance, city'}]},
+ {title:'Audience',fields:[
+  {id:'personas',t:'table',cols:[{k:'name',l:'Listener type',t:'text'},{k:'where',l:'Where they are',t:'text'},{k:'want',l:'What they want from you',t:'text'},{k:'hook',l:'Content that wins them',t:'text'}]}]},
+ {title:'Channels',help:'Pick the two channels you can actually feed. A dead channel hurts more than no channel.',fields:[
+  {id:'channels',t:'table',cols:[{k:'ch',l:'Channel',t:'text'},{k:'goal',l:'Goal',t:'text'},{k:'cadence',l:'Cadence',t:'text'},{k:'owner',l:'Owner',t:'select',opts:['Artist','Manager','Both']},{k:'kpi',l:'KPI',t:'text'}]}]},
+ {title:'Campaign phases',help:'Dates come from your release date.',fields:[{id:'phases',t:'phases'}]},
+ {title:'Goals',fields:[
+  {id:'goals',t:'table',cols:[{k:'metric',l:'Metric',t:'text'},{k:'baseline',l:'Baseline now',t:'text'},{k:'target',l:'Target (week 1)',t:'text'},{k:'target2',l:'Target (day 30)',t:'text'}]}]}]},
+
+calendar:{name:'Content Calendar',short:'Content',blurb:'Six weeks, one line per day. Suggestions are pre-filled from the teaser plan; type over them with what you will actually post.',sections:[{title:'',fields:[{id:'days',t:'calendar'}]}]},
+
+budget:{name:'Budget',short:'Budget',blurb:'Set the cap, list every cost, keep 15% back. Update the actual column as money goes out.',sections:[
+ {title:'',fields:[
+  {id:'cap',t:'number',l:'Budget cap ($)',p:'Total you will not go over'},
+  {id:'lines',t:'table',cols:[{k:'item',l:'Line item',t:'text'},{k:'vendor',l:'Vendor / tool',t:'text'},{k:'planned',l:'Planned $',t:'number',w:100},{k:'actual',l:'Actual $',t:'number',w:100},{k:'paid',l:'Paid',t:'check',w:60},{k:'notes',l:'Notes',t:'text'}],totals:['planned','actual']},
+  {id:'budgetsum',t:'budgetsum'}]}]},
+
+distribution:{name:'Distribution Checklist',short:'Distribution',blurb:'Everything the distributor and the platforms need, in the order they need it. One miss here delays the whole date.',sections:[
+ {title:'Before upload',fields:[{id:'c1',t:'checks',items:[
+  'Distributor chosen; account verified; payout method added',
+  'You keep 100% of master rights under the plan you chose (read the terms)',
+  'Release date is a Friday at least 4 weeks out',
+  'Final masters: WAV, 16 or 24-bit, 44.1 kHz, no clipping, correct track order',
+  'Artwork: 3000x3000 JPG/PNG, RGB, no URLs, no social handles, no blurry text',
+  'Metadata sheet done: titles, features, writers, producers, explicit flags, genre, language',
+  'ISRC and UPC codes issued and recorded in your catalog sheet',
+  'Lyrics finalized and ready to submit (Musixmatch or distributor)',
+  'Splits entered in the distributor tool for every collaborator']}]},
+ {title:'At upload (T-30)',fields:[{id:'c2',t:'checks',items:[
+  'Release uploaded with "release on this date" set, not "as soon as possible"',
+  'Artist name matches existing profiles exactly (no new duplicate artist created)',
+  'Featured artists spelled the way their own profiles are spelled',
+  'Explicit flag set correctly on every track; clean version uploaded if you have one',
+  'Content ID turned on for YouTube',
+  'Stores selected: all major platforms plus TikTok, Instagram, Shazam']}]},
+ {title:'After upload',fields:[{id:'c3',t:'checks',items:[
+  'Release shows as upcoming in Spotify for Artists (2-5 days)',
+  'Focus track pitched to Spotify editorial (7+ days before release)',
+  'Pitched to Apple Music, Amazon, Deezer, Tidal via distributor tools',
+  'Pre-save link created and tested on iPhone and Android',
+  'Canvas loops uploaded per track',
+  'Credits display correctly on Spotify and Apple (writers, producers, features)',
+  'Release-day check at 12:01 AM: live on every platform; smart link updated']}]},
+ {title:'Details',fields:[
+  {id:'distributor',t:'text',l:'Distributor and plan',p:'e.g. DistroKid Ultimate, UnitedMasters SELECT'},
+  {id:'upc',t:'text',l:'UPC'},{id:'isrcs',t:'textarea',l:'ISRCs (one per line, track — code)'}]}]},
+
+copyright:{name:'Copyright Checklist',short:'Copyright',blurb:'Ownership on paper, before release. This is what lets you keep the masters and act when someone takes your work.',sections:[
+ {title:'Ownership',fields:[{id:'c1',t:'checks',items:[
+  'Every beat: exclusive license or work-for-hire agreement in writing (a lease is not ownership)',
+  'Producer agreement states who owns the master and the producer\'s split',
+  'Split sheet signed by every writer and producer for every song',
+  'Every sample and interpolation cleared in writing, or removed',
+  'Feature agreements signed: their split, their approval rights, how they are credited',
+  'Artwork and photos: written license or work-for-hire from the designer/photographer',
+  'Video: release forms from anyone on camera; location permission where needed',
+  'Artist name checked against existing trademarks (USPTO search) — consider filing']}]},
+ {title:'Registration',fields:[{id:'c2',t:'checks',items:[
+  'U.S. Copyright Office: register sound recording + composition (Form SR covers both when you own both)',
+  'Registration filed within 3 months of release (preserves statutory damages and fees)',
+  'Copyright and phonogram lines set on every release (see below)',
+  'Certificates saved in the asset folder']}]},
+ {title:'Protection',fields:[{id:'c3',t:'checks',items:[
+  'YouTube Content ID on through distributor',
+  'Know the takedown process for each platform (DMCA notice template saved)',
+  'Watermarked or private links only for unreleased music',
+  'Collaboration guardrails written: what you will never sign away (masters, name, likeness)']}]},
+ {title:'Lines',help:'Use these exactly on the release.',fields:[{id:'lines',t:'clines'},{id:'entity',t:'text',l:'Rights-holder entity name',p:'e.g. CXB Group'}]}]},
+
+royalty:{name:'Royalty Checklist',short:'Royalties',blurb:'Six different organizations pay six different royalties. If you are not registered with one, that money sits unclaimed and eventually disappears.',sections:[
+ {title:'Who pays what',fields:[{id:'ref',t:'royref'}]},
+ {title:'Registrations',fields:[{id:'c1',t:'checks',items:[
+  'PRO (ASCAP or BMI) — writer account',
+  'PRO — publisher account (your own publishing entity)',
+  'The MLC — member account, works registered with ISRCs',
+  'SoundExchange — registered as featured artist AND as rights owner',
+  'Publishing admin (Songtrust or similar) — for global mechanicals',
+  'Distributor — splits set, payout method verified, tax form submitted',
+  'YouTube Content ID — on via distributor',
+  'Bandcamp / Fourthwall / merch — payout accounts verified',
+  'Every new release registered with PRO + MLC within 2 weeks of release']}]},
+ {title:'Tracking',fields:[
+  {id:'sheet',t:'text',l:'Royalty tracking sheet link'},
+  {id:'streams',t:'table',cols:[{k:'src',l:'Income source',t:'text'},{k:'freq',l:'Pays',t:'text'},{k:'login',l:'Login / where to check',t:'text'},{k:'last',l:'Last statement',t:'text'},{k:'amt',l:'Last amount $',t:'number',w:110}],totals:['amt']}]}]},
+
+publishing:{name:'Publishing Checklist',short:'Publishing',blurb:'The songwriting half of your rights. Separate from the master. Most independent artists never set this up and lose half their royalties.',sections:[
+ {title:'Setup',fields:[{id:'c1',t:'checks',items:[
+  'Publishing entity named (your PRO publisher account uses this name)',
+  'IPI numbers recorded for you as writer and as publisher',
+  'Songwriter split sheet per song (writers only — separate from master splits)',
+  'Co-writers\' PRO affiliation and IPI collected']}]},
+ {title:'Per song',fields:[{id:'c2',t:'checks',items:[
+  'Registered with PRO with all writers and publisher shares',
+  'ISWC recorded once assigned',
+  'Registered with The MLC and linked to the ISRC(s)',
+  'Registered with publishing admin (Songtrust) if used',
+  'Lyrics submitted (Musixmatch / distributor)',
+  'Catalog sheet updated: title, writers, splits, ISWC, ISRC, UPC, release date']}]},
+ {title:'Sync-ready',help:'Sync (TV, ads, games) needs these on hand the day someone asks.',fields:[{id:'c3',t:'checks',items:[
+  'Instrumental version','Clean version','A cappella','Stems, labeled','One-sheet: BPM, key, mood, lyrics theme, contact','Confirmation that you control 100% of master AND publishing (one-stop)']},
+  {id:'sync',t:'text',l:'Sync library / rep',p:'e.g. UnitedMasters sync, Musicbed, direct'}]},
+ {title:'Catalog',fields:[{id:'catalog',t:'table',cols:[{k:'song',l:'Song',t:'text'},{k:'writers',l:'Writers + %',t:'text'},{k:'iswc',l:'ISWC',t:'text'},{k:'isrc',l:'ISRC',t:'text'},{k:'pro',l:'PRO',t:'check',w:50},{k:'mlc',l:'MLC',t:'check',w:50},{k:'admin',l:'Admin',t:'check',w:60}]}]}]},
+
+playlist:{name:'Playlist Strategy',short:'Playlists',blurb:'Editorial is a lottery ticket. Algorithmic is earned with saves and follows. Independent curators are a numbers game. Work all three; never pay for placement.',sections:[
+ {title:'Editorial pitch (Spotify for Artists)',help:'Submit 7+ days before release. One track per release. Fill every field.',fields:[
+  {id:'genre',t:'text',l:'Genre / sub-genre'},{id:'mood',t:'text',l:'Moods (pick 3)'},{id:'instr',t:'text',l:'Instruments / style'},
+  {id:'story',t:'textarea',l:'Pitch story (under 500 characters)',p:'Where it came from, what it sounds like, what is happening around it (video, press, shows). No hype words.',max:500},
+  {id:'similar',t:'text',l:'Sounds like (3 artists on Spotify)'}]},
+ {title:'Algorithmic (Release Radar, Discover Weekly, Radio)',fields:[{id:'c1',t:'checks',items:[
+  'Pre-save campaign running (pre-saves count as saves on day one)',
+  'Ask for saves and follows in every post, not just streams',
+  'Release-day email/SMS points to Spotify first for the first 24 hours',
+  'Canvas uploaded (raises engagement)',
+  'Track added to your own playlists and set as Artist Pick',
+  'Skip rate protected: strong first 15 seconds, no long intro']}]},
+ {title:'Independent curators',help:'Real curators with real listeners. Skip anyone who guarantees placement for money.',fields:[
+  {id:'curators',t:'table',cols:[{k:'pl',l:'Playlist',t:'text'},{k:'cur',l:'Curator',t:'text'},{k:'contact',l:'Contact / platform',t:'text'},{k:'followers',l:'Followers',t:'number',w:100},{k:'fit',l:'Fit (1-5)',t:'number',w:80},{k:'sent',l:'Sent',t:'text',w:100},{k:'status',l:'Status',t:'select',opts:['Not sent','Sent','Added','Passed','No reply']}]}]},
+ {title:'User playlists and communities',fields:[
+  {id:'own',t:'text',l:'Your own playlists to build',p:'e.g. a city playlist, a mood playlist you update weekly'},
+  {id:'communities',t:'textarea',l:'Communities to share in (as a fan, not an ad)',p:'Subreddits, Discords, Facebook groups'}]}]},
+
+pr:{name:'PR Strategy',short:'PR',blurb:'Climb the ladder: local first, then scene, then trade. Each rung is proof for the next. Dates come from the release date.',sections:[
+ {title:'The story',fields:[
+  {id:'headline',t:'text',l:'Press release headline'},
+  {id:'hook',t:'textarea',l:'The hook (one paragraph)',p:'Why now, why this, why anyone outside your fans should care'},
+  {id:'quote',t:'textarea',l:'Your quote'},
+  {id:'epk',t:'text',l:'EPK link'},{id:'contact',t:'text',l:'Press contact (name, email)'}]},
+ {title:'Timeline',fields:[{id:'prtl',t:'prtimeline'}]},
+ {title:'Press ladder',help:'Tier 1 local · Tier 2 scene / genre · Tier 3 trade. Personalize the first line of every email.',fields:[
+  {id:'outlets',t:'table',cols:[{k:'outlet',l:'Outlet',t:'text'},{k:'tier',l:'Tier',t:'select',opts:['1 Local','2 Scene','3 Trade','Podcast','Radio','YouTube']},{k:'contact',l:'Contact',t:'text'},{k:'angle',l:'Angle',t:'text'},{k:'sent',l:'Sent',t:'text',w:100},{k:'status',l:'Status',t:'select',opts:['Not sent','Sent','Replied','Covered','Passed']}]}]},
+ {title:'Interviews and premieres',fields:[
+  {id:'premiere',t:'text',l:'Premiere partner',p:'One outlet gets the video or single 24h early'},
+  {id:'interviews',t:'textarea',l:'Interview / podcast targets and status'}]}]},
+
+fans:{name:'Fan-Growth Plan',short:'Fans',blurb:'Followers are rented. The email and SMS list is owned. Every campaign should leave the list bigger than it found it.',sections:[
+ {title:'Capture',fields:[
+  {id:'tool',t:'text',l:'Email / SMS tool',p:'e.g. Kit, Mailchimp, Laylo'},
+  {id:'incentive',t:'text',l:'Why someone joins',p:'The unreleased track, early merch, a private link…'},
+  {id:'where',t:'text',l:'Where the form lives',p:'Site, link-in-bio, story link sticker, QR at shows'},
+  {id:'baseline',t:'number',l:'List size today'},{id:'target',t:'number',l:'List target at T+30'}]},
+ {title:'Welcome sequence',help:'Five emails, auto-sent on signup.',fields:[{id:'welcome',t:'table',cols:[{k:'n',l:'#',t:'text',w:40},{k:'day',l:'Day',t:'text',w:60},{k:'subject',l:'Subject line',t:'text'},{k:'job',l:'Job of the email',t:'text'},{k:'done',l:'Written',t:'check',w:70}]}]},
+ {title:'Fan-first moments',fields:[
+  {id:'exclusive',t:'text',l:'Fan-first exclusive for this release'},
+  {id:'participation',t:'text',l:'Participation moment',p:'Pick the alt cover, guess the feature, send a voice note…'},
+  {id:'activation',t:'text',l:'Physical activation',p:'Listening party, pop-up, show — city and date'}]},
+ {title:'Street team',fields:[
+  {id:'teamsize',t:'number',l:'Street team size'},
+  {id:'teamask',t:'textarea',l:'Release-day checklist you send them',p:'Save, add to a playlist, share the story, comment on the post, text two friends'},
+  {id:'reward',t:'text',l:'How you thank them'}]}]},
+
+post:{name:'Post-Release Analysis',short:'Post-release',blurb:'Numbers first, feelings second. Fill day 1, week 1, week 2, and day 30. Then decide what the next release repeats and what it cuts.',sections:[
+ {title:'Scorecard',fields:[{id:'kpis',t:'kpi'}]},
+ {title:'Roadmap execution',fields:[{id:'exec',t:'execsum'}]},
+ {title:'Read',fields:[
+  {id:'worked',t:'textarea',l:'What worked (with the number that proves it)'},
+  {id:'didnt',t:'textarea',l:'What did not work'},
+  {id:'surprise',t:'textarea',l:'What surprised you'},
+  {id:'repeat',t:'textarea',l:'Repeat next time'},
+  {id:'cut',t:'textarea',l:'Cut next time'},
+  {id:'next',t:'text',l:'Next release date'}]}]}
+};
+
+const AR_CRIT=[['Streaming growth','Week-1 streams vs your last release; week-2 vs week-1 (holding above 60% is strong)'],['Social engagement','Saves + shares as % of reach on the release posts (4%+ is strong)'],['Fan conversion','Email/SMS signups and pre-saves per 1,000 listeners'],['Playlist response','Editorial, algorithmic (Release Radar / Discover Weekly) and user playlist adds'],['YouTube response','Views, average view duration, subscribers gained'],['UGC potential','TikTok / Reels uses of the sound by people who are not you'],['Revenue','Direct sales + merch + streaming vs the budget spent'],['Geographic response','New cities/countries in the top 10 listener locations']];
+function arRec(t){return t>=70?['KEEP PUSHING','Put the second-wave budget behind this one: ads on the best clip, remix or visualizer, pitch the sync package.']:t>=50?['SHIFT MARKETING','The song is working somewhere and not elsewhere. Read the two lowest lines and move spend to the channel that scored highest.']:['MOVE TO NEXT SINGLE','Stop spending. Log what you learned in Post-Release Analysis and set the next date.'];}
+const KPI_LIST=['Streams (all platforms)','Spotify saves','Save rate % (saves ÷ listeners)','Playlist adds (editorial / algorithmic / user)','Spotify followers','Apple Music plays','YouTube views','TikTok / Reels uses of the sound','Instagram followers','TikTok followers','Email + SMS list size','Email open rate %','Pre-saves','Merch orders','Direct sales (Bandcamp) $','Press placements','Total revenue $'];
+const ROY_REF=[['Performance (composition)','ASCAP / BMI','Radio, venues, streaming, TV plays of the song','Writer share + publisher share'],['Mechanical (composition, US streaming)','The MLC','Every stream/download of the song in the US','Publisher (you, if self-published)'],['Mechanical (composition, worldwide)','Publishing admin (Songtrust etc.)','Streams and downloads outside the US','Publisher'],['Digital performance (master)','SoundExchange','Pandora, SiriusXM, internet radio','Featured artist 45% + rights owner 50%'],['Streaming (master)','Distributor','Spotify, Apple, YouTube, Amazon etc.','Master owner (you)'],['Sync','Direct / sync rep','TV, film, ads, games','Master + publishing (both fees)'],['Direct sales','Bandcamp / Fourthwall','Downloads, vinyl, merch','You, minus platform fee']];
+
+function rawDate(off){const r=parseDate(state.settings.date);return r?addDays(r,off):null;}
+function planData(key){const p=state.plans[key];return (p&&p.v)||{};}
+function writePlan(key,v,actText){state.plans[key]={v,updatedAt:now(),by:who||'Someone'};if(actText)logAct(actText);saveLocal();const p={plans:{}};p.plans[key]=state.plans[key];pushPatch(p);}
+let planTimer=null;
+function planSet(key,field,val){const v=Object.assign({},planData(key));v[field]=val;state.plans[key]=Object.assign({},state.plans[key]||{},{v});saveLocal();clearTimeout(planTimer);planTimer=setTimeout(()=>writePlan(key,state.plans[key].v),600);}
+function planTable(key,id,cols){const v=planData(key);let rows=v[id];if(!Array.isArray(rows)||!rows.length){rows=defaultRows(key,id);}return rows;}
+function defaultRows(key,id){
+  const s=state.settings,cx=s.preset;
+  const D={
+   'budget.lines':['Mixing & mastering','Artwork & design','Music video / visualizer','Photos','Paid ads','PR / press','Playlist pitching (SubmitHub, Groover)','Merch production','Distribution + registrations','Copyright registration','Reserve (15%)'].map(i=>({item:i,vendor:'',planned:'',actual:'',paid:false,notes:''})),
+   'marketing.channels':[{ch:'Instagram',goal:'Awareness + daily proof',cadence:'1 post + stories daily',owner:'Artist',kpi:'Saves/shares > 4% of reach'},{ch:'TikTok',goal:'Sound discovery',cadence:'5+ hooks/week pre-release',owner:'Artist',kpi:'Sound uses'},{ch:'YouTube',goal:'Video home',cadence:'Video + 3 shorts',owner:'Manager',kpi:'Views, subs'},{ch:'Email + SMS',goal:'Own the fan',cadence:'Weekly + release day',owner:'Manager',kpi:'List growth, opens'}],
+   'marketing.personas':[{name:'The day-one fan',where:'Your DMs, your shows',want:'Access first',hook:'Unreleased track, early merch'},{name:'The playlist listener',where:'Spotify, Apple',want:'A song that fits the mood',hook:'Strong first 15s, saves'},{name:'The city',where:'Philly IG, local shows',want:'Someone from here winning',hook:'Neighborhood content, pop-up'}],
+   'marketing.goals':[{metric:'Week-1 streams',baseline:'',target:'',target2:''},{metric:'Saves',baseline:'',target:'',target2:''},{metric:'Email + SMS list',baseline:'',target:'',target2:''},{metric:'Merch orders',baseline:'',target:'',target2:''}],
+   'fans.welcome':[{n:'1',day:'0',subject:'',job:'Who you are + the exclusive you promised',done:false},{n:'2',day:'2',subject:'',job:'The story behind the project',done:false},{n:'3',day:'4',subject:'',job:'The unreleased track (list-only link)',done:false},{n:'4',day:'7',subject:'',job:'The merch / direct offer',done:false},{n:'5',day:'10',subject:'',job:'The ask: pre-save, share, reply',done:false}],
+   'pr.outlets':cx?[{outlet:'Philthy Mag',tier:'1 Local',contact:'',angle:'Philly independent, no label',sent:'',status:'Not sent'},{outlet:'PhillyVoice',tier:'1 Local',contact:'',angle:'Local artist + merch line',sent:'',status:'Not sent'},{outlet:'Philadelphia Inquirer',tier:'1 Local',contact:'',angle:'',sent:'',status:'Not sent'},{outlet:'Hip-Hop Wired',tier:'2 Scene',contact:'',angle:'',sent:'',status:'Not sent'},{outlet:'The High Note',tier:'2 Scene',contact:'',angle:'',sent:'',status:'Not sent'},{outlet:'Hypebeast',tier:'3 Trade',contact:'',angle:'CXLD BLOODED / CXB apparel',sent:'',status:'Not sent'},{outlet:'Highsnobiety',tier:'3 Trade',contact:'',angle:'Musician-led apparel house',sent:'',status:'Not sent'}]:[{outlet:'',tier:'1 Local',contact:'',angle:'',sent:'',status:'Not sent'}],
+   'royalty.streams':[{src:'Distributor (streaming)',freq:'Monthly',login:'',last:'',amt:''},{src:'PRO (performance)',freq:'Quarterly',login:'',last:'',amt:''},{src:'The MLC',freq:'Monthly',login:'',last:'',amt:''},{src:'SoundExchange',freq:'Monthly',login:'',last:'',amt:''},{src:'Bandcamp',freq:'On sale',login:'',last:'',amt:''},{src:'Merch (Fourthwall)',freq:'On sale',login:'',last:'',amt:''}],
+   'ar.tracks':[{title:'',bpm:'',mood:'',first15:'',hook:'',lyric:'',role:'Lead single',notes:''}],
+   'playlist.curators':[{pl:'',cur:'',contact:'',followers:'',fit:'',sent:'',status:'Not sent'}],
+   'publishing.catalog':[{song:'',writers:'',iswc:'',isrc:'',pro:false,mlc:false,admin:false}]
+  };
+  return (D[key+'.'+id]||[{}]).map(r=>Object.assign({},r));
+}
+function calSuggest(off){
+  const cx=state.settings.preset;
+  const F=cx?['PHL Files','Drop Proof','Loud/Stealth','Cxbra Direct','Fan Proof','Drop Proof','Repost + rest']:['Behind the scenes','Lyric card','Video clip','Fan question / poll','Performance clip','Personal / story','Repost + rest'];
+  const fixed={[-28]:'ANNOUNCE: title, date, cover, pre-save link. Pin it.',[-27]:'Reply to every comment on the announcement',[-21]:'SOUND: first 15 seconds, captions on',[-14]:'TITLE + DATE reminder, countdown starts',[-13]:'Live: listening preview, 30 seconds, Q&A',[-7]:'ONE WEEK OUT: daily countdown starts',[-3]:'Ask the street team: checklist goes out',[-2]:'"Drops at midnight" — where and when',[-1]:'Midnight teaser + final pre-save push',0:'OUT NOW ×4-6: post, story, live, lyric clip, thank-you',1:'Thank-you live clip + 24h numbers screenshot',2:'Lyric video snippet + fan reposts',3:'Repost every fan share; playlist ask',5:'Behind the scenes from the shoot',7:'Week-one numbers post + thank the street team',10:'Tease second wave (remix / visualizer / live)',13:'Second-wave content drop'};
+  if(fixed[off]!=null)return fixed[off];
+  const r=rawDate(off);const dow=r?r.getDay():((off%7)+7)%7;
+  return F[(dow+6)%7];
+}
+
+function renderPlans(){
+  const key=state.planKey||PLAN_ORDER[0];const P=PLANS[key];const v=planData(key);
+  const nav=PLAN_ORDER.map(k=>{const filled=Object.keys(planData(k)).length>0;return `<button class="${k===key?'on':''}" data-plan="${k}">${PLANS[k].short}${filled?' <i></i>':''}</button>`;}).join('');
+  let h=`<div class="plan-nav">${nav}</div><div class="plan"><div class="plan-head"><h2>${P.name}</h2><p>${P.blurb}</p><div class="plan-stamp">${state.plans[key]&&state.plans[key].updatedAt?'Last change: '+esc(state.plans[key].by)+' · '+ago(state.plans[key].updatedAt):'Not started'}</div></div>`;
+  P.sections.forEach(sec=>{
+    h+=`<section class="plan-sec">${sec.title?`<h3>${sec.title}</h3>`:''}${sec.help?`<p class="help">${sec.help}</p>`:''}<div class="plan-fields">`;
+    sec.fields.forEach(f=>{h+=renderField(key,f,v);});
+    h+='</div></section>';
+  });
+  h+=`<div class="plan-foot"><button class="btn sm" data-planexport="${key}">Export this playbook (CSV)</button><button class="btn sm danger" data-planclear="${key}">Clear this playbook</button></div></div>`;
+  return h;
+}
+function renderField(key,f,v){
+  const val=v[f.id];const D=`data-plan="${key}" data-f="${f.id}"`;
+  switch(f.t){
+   case 'text':return `<div class="field pf"><label>${f.l}</label><input ${D} value="${esc(val||'')}" placeholder="${esc(f.p||'')}"></div>`;
+   case 'number':return `<div class="field pf narrow"><label>${f.l}</label><input type="number" ${D} value="${esc(val==null?'':val)}" placeholder="${esc(f.p||'')}"></div>`;
+   case 'textarea':return `<div class="field pf wide"><label>${f.l}${f.max?` <span class="cnt" data-cnt="${f.id}">${(val||'').length}/${f.max}</span>`:''}</label><textarea rows="3" ${D} ${f.max?'maxlength="'+f.max+'"':''} placeholder="${esc(f.p||'')}">${esc(val||'')}</textarea></div>`;
+   case 'select':return `<div class="field pf"><label>${f.l}</label><select ${D}><option value="">—</option>${f.opts.map(o=>`<option ${val===o?'selected':''}>${o}</option>`).join('')}</select></div>`;
+   case 'checks':{const st=val||{};const done=f.items.filter((_,i)=>st[i]).length;return `<div class="checks wide"><div class="checks-h">${done}/${f.items.length} done</div>${f.items.map((it,i)=>`<label class="ck ${st[i]?'on':''}"><input type="checkbox" ${D} data-i="${i}" ${st[i]?'checked':''}><span>${esc(it)}</span></label>`).join('')}</div>`;}
+   case 'table':{const rows=planTable(key,f.id,f.cols);let t=`<div class="ptable wide"><div class="tscroll"><table><thead><tr>${f.cols.map(c=>`<th ${c.w?'style="width:'+c.w+'px"':''}>${c.l}</th>`).join('')}<th style="width:32px"></th></tr></thead><tbody>`;
+     rows.forEach((r,ri)=>{t+='<tr>'+f.cols.map(c=>{const cv=r[c.k];const A=`${D} data-r="${ri}" data-c="${c.k}"`;
+       if(c.t==='check')return `<td class="c"><input type="checkbox" ${A} ${cv?'checked':''}></td>`;
+       if(c.t==='select')return `<td><select ${A}>${c.opts.map(o=>`<option ${cv===o?'selected':''}>${o}</option>`).join('')}</select></td>`;
+       if(c.t==='number')return `<td><input type="number" ${A} value="${esc(cv==null?'':cv)}"></td>`;
+       return `<td><input ${A} value="${esc(cv||'')}"></td>`;}).join('')+`<td class="c"><button class="rowx" data-rowdel="${f.id}" data-plan="${key}" data-r="${ri}" title="Remove row">×</button></td></tr>`;});
+     if(f.totals){t+='<tr class="tot">'+f.cols.map(c=>f.totals.includes(c.k)?`<td class="mono">$${rows.reduce((a,r)=>a+(parseFloat(r[c.k])||0),0).toLocaleString()}</td>`:'<td></td>').join('')+'<td></td></tr>';}
+     t+=`</tbody></table></div><button class="btn sm" data-rowadd="${f.id}" data-plan="${key}">+ Row</button></div>`;return t;}
+   case 'calendar':{const days=val||{};let t='<div class="ccal wide">';let week=[];
+     for(let off=-28;off<=13;off++){const d=rawDate(off);const sug=calSuggest(off);const txt=days[off]||'';
+       week.push(`<div class="cday ${off===0?'rel':''} ${d&&iso(d)===iso(today())?'today':''}"><div class="cd-h"><span>${d?d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}):''}</span><span>${off===0?'RELEASE':off<0?'T'+off:'T+'+off}</span></div><div class="cd-s">${esc(sug)}</div><textarea rows="2" ${D} data-day="${off}" placeholder="What you will post">${esc(txt)}</textarea></div>`);
+       if(week.length===7){t+='<div class="cweek">'+week.join('')+'</div>';week=[];}}
+     return t+'</div>';}
+   case 'phases':{const r=parseDate(state.settings.date);const ph=[['Foundation','Rights, plan, budget, assets briefed',-90,-61],['Build','Artwork, video, content bank, press list',-60,-31],['Tease','Announce, pre-save, teasers, pitching',-30,-8],['Launch week','Countdown, release day, out-now push',-7,7],['Sustain','Second wave, follow-ups, analysis',8,30]];
+     return `<div class="phases wide">${ph.map(p=>`<div class="ph"><b>${p[0]}</b><span class="mono">${r?fmt(relDate(p[2]))+' → '+fmt(relDate(p[3])):relLabel(p[2])+' → '+relLabel(p[3])}</span><small>${p[1]}</small></div>`).join('')}</div>`;}
+   case 'prtimeline':{const r=parseDate(state.settings.date);const tl=[['Press list built',-40],['Press release + pitch templates written',-35],['Premiere partner confirmed',-35],['Wave 1: local outlets',-27],['Curator pitches',-27],['Interviews / podcasts booked',-24],['Wave 2: scene + trade',-20],['DJ / radio servicing',-15],['Out-now note to everyone pitched',0],['Follow-ups',3],['Second wave with results',14]];
+     return `<div class="tl wide">${tl.map(x=>`<div class="tl-r"><span class="mono">${r?fmt(relDate(x[1])):relLabel(x[1])}</span><span>${x[0]}</span></div>`).join('')}</div>`;}
+   case 'clines':{const y=(parseDate(state.settings.date)||today()).getFullYear();const ent=v.entity||state.settings.artist||'[Rights holder]';return `<div class="clines wide"><div><span class="mono">℗ ${y} ${esc(ent)}</span><small>Phonogram — the sound recording (master)</small></div><div><span class="mono">© ${y} ${esc(ent)}</span><small>Copyright — the composition and artwork</small></div></div>`;}
+   case 'royref':return `<div class="tscroll wide"><table class="ref"><thead><tr><th>Royalty</th><th>Who collects it</th><th>Triggered by</th><th>Who gets paid</th></tr></thead><tbody>${ROY_REF.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+   case 'budgetsum':{const rows=planTable(key,'lines');const cap=parseFloat(v.cap)||0,pl=rows.reduce((a,r)=>a+(parseFloat(r.planned)||0),0),ac=rows.reduce((a,r)=>a+(parseFloat(r.actual)||0),0);
+     return `<div class="bsum wide"><div><span>Cap</span><b>$${cap.toLocaleString()}</b></div><div><span>Planned</span><b class="${cap&&pl>cap?'bad':''}">$${pl.toLocaleString()}</b></div><div><span>Spent</span><b class="${cap&&ac>cap?'bad':''}">$${ac.toLocaleString()}</b></div><div><span>Left of cap</span><b class="${cap&&cap-ac<0?'bad':'good'}">$${(cap-ac).toLocaleString()}</b></div></div>`;}
+   case 'kpi':{const k=val||{};const cols=['goal','d1','w1','w2','d30'],labels=['Goal','Day 1','Week 1','Week 2','Day 30'];
+     return `<div class="tscroll wide"><table class="kpi"><thead><tr><th>Metric</th>${labels.map(l=>`<th>${l}</th>`).join('')}</tr></thead><tbody>${KPI_LIST.map((m,i)=>`<tr><td>${m}</td>${cols.map(c=>`<td><input ${D} data-k="${i}" data-c="${c}" value="${esc((k[i]||{})[c]||'')}"></td>`).join('')}</tr>`).join('')}</tbody></table></div>`;}
+   case 'arscore':{const s=val||{};const tot=AR_CRIT.reduce((a,_,i)=>a+Math.min(10,Math.max(0,parseFloat(s[i])||0)),0);const r=arRec(tot);
+     return `<div class="wide arscore"><div class="tscroll"><table class="kpi"><thead><tr><th>Criteria</th><th>Where the number comes from</th><th style="width:90px">0-10</th></tr></thead><tbody>${AR_CRIT.map((c,i)=>`<tr><td>${c[0]}</td><td class="dim">${c[1]}</td><td><input type="number" min="0" max="10" ${D} data-s="${i}" value="${esc(s[i]==null?'':s[i])}"></td></tr>`).join('')}</tbody></table></div><div class="bsum" style="margin-top:10px"><div><span>A&R Score</span><b id="arTot">${tot}<small>/100</small></b></div><div class="rec"><span>Recommendation</span><b id="arRec" class="${tot>=70?'good':tot>=50?'':'bad'}">${r[0]}</b><small id="arWhy">${r[1]}</small></div></div></div>`;}
+   case 'execsum':{const all=allTasks();const act=all.filter(t=>t.status!=='skip'),done=act.filter(t=>t.status==='done'),skip=all.filter(t=>t.status==='skip'),late=act.filter(t=>t.status!=='done'&&t.dueDate&&t.dueDate<today());
+     const byArea=Object.keys(AREAS).map(a=>{const g=act.filter(t=>t.area===a);const d=g.filter(t=>t.status==='done').length;return `<div class="ph"><b>${AREAS[a].short}</b><span class="mono">${d}/${g.length}</span><div class="progress"><i style="width:${g.length?Math.round(d/g.length*100):0}%"></i></div></div>`;}).join('');
+     return `<div class="wide"><div class="bsum"><div><span>Done</span><b>${done.length}/${act.length}</b></div><div><span>Skipped</span><b>${skip.length}</b></div><div><span>Missed deadline</span><b class="${late.length?'bad':'good'}">${late.length}</b></div></div><div class="phases" style="margin-top:10px">${byArea}</div></div>`;}
+  }
+  return '';
+}
+function planCSV(key){
+  const P=PLANS[key],v=planData(key);const rows=[['Playbook',P.name]];
+  P.sections.forEach(sec=>{sec.fields.forEach(f=>{
+    if(['text','number','textarea','select'].includes(f.t))rows.push([f.l,v[f.id]==null?'':v[f.id]]);
+    else if(f.t==='checks'){const st=v[f.id]||{};f.items.forEach((it,i)=>rows.push([it,st[i]?'done':'']));}
+    else if(f.t==='table'){rows.push([]);rows.push(f.cols.map(c=>c.l));planTable(key,f.id).forEach(r=>rows.push(f.cols.map(c=>r[c.k]==null?'':(c.t==='check'?(r[c.k]?'yes':''):r[c.k]))));}
+    else if(f.t==='calendar'){rows.push([]);rows.push(['Date','Offset','Suggested','Planned post']);const d=v[f.id]||{};for(let o=-28;o<=13;o++){const dt=rawDate(o);rows.push([dt?iso(dt):'',o,calSuggest(o),d[o]||'']);}}
+    else if(f.t==='arscore'){const s=v[f.id]||{};rows.push([]);AR_CRIT.forEach((c,i)=>rows.push([c[0],s[i]==null?'':s[i]]));rows.push(['A&R Score',AR_CRIT.reduce((a,_,i)=>a+(parseFloat(s[i])||0),0)+'/100']);}
+    else if(f.t==='kpi'){rows.push([]);rows.push(['Metric','Goal','Day 1','Week 1','Week 2','Day 30']);const k=v[f.id]||{};KPI_LIST.forEach((m,i)=>{const r=k[i]||{};rows.push([m,r.goal||'',r.d1||'',r.w1||'',r.w2||'',r.d30||'']);});}
+  });});
+  const s=rows.map(r=>r.map(x=>'"'+String(x==null?'':x).replace(/"/g,'""')+'"').join(',')).join('\r\n');
+  download(key+'_playbook.csv','text/csv',s);
+}
+function planPrint(){
+  let h='';
+  PLAN_ORDER.forEach(key=>{const v=planData(key);if(!Object.keys(v).length)return;const P=PLANS[key];h+=`<h2>${P.name}</h2>`;
+    P.sections.forEach(sec=>{sec.fields.forEach(f=>{
+      if(['text','number','textarea','select'].includes(f.t)&&v[f.id])h+=`<p><b>${f.l}:</b> ${esc(v[f.id])}</p>`;
+      else if(f.t==='checks'){const st=v[f.id]||{};h+='<table>'+f.items.map((it,i)=>`<tr><td><span class="box ${st[i]?'done':''}"></span></td><td>${esc(it)}</td></tr>`).join('')+'</table>';}
+      else if(f.t==='table'){const rows=planTable(key,f.id).filter(r=>Object.values(r).some(x=>x&&x!==true?String(x).trim():x===true));if(!rows.length)return;h+='<table><tr>'+f.cols.map(c=>`<th>${c.l}</th>`).join('')+'</tr>'+rows.map(r=>'<tr>'+f.cols.map(c=>`<td>${c.t==='check'?(r[c.k]?'✓':''):esc(r[c.k]==null?'':r[c.k])}</td>`).join('')+'</tr>').join('')+'</table>';}
+      else if(f.t==='calendar'){const d=v[f.id]||{};h+='<table><tr><th>Date</th><th>Suggested</th><th>Planned</th></tr>';for(let o=-28;o<=13;o++){const dt=rawDate(o);h+=`<tr><td class="m">${dt?fmt(dt):(o<0?'T'+o:'T+'+o)}</td><td>${esc(calSuggest(o))}</td><td>${esc(d[o]||'')}</td></tr>`;}h+='</table>';}
+      else if(f.t==='arscore'){const s=v[f.id]||{};const tot=AR_CRIT.reduce((a,_,i)=>a+(parseFloat(s[i])||0),0);h+='<table>'+AR_CRIT.map((c,i)=>`<tr><td>${c[0]}</td><td class="m">${esc(s[i]==null?'':s[i])}</td></tr>`).join('')+`<tr><td><b>A&R Score</b></td><td class="m"><b>${tot}/100 — ${arRec(tot)[0]}</b></td></tr></table>`;}
+      else if(f.t==='kpi'){const k=v[f.id]||{};h+='<table><tr><th>Metric</th><th>Goal</th><th>Day 1</th><th>Week 1</th><th>Week 2</th><th>Day 30</th></tr>'+KPI_LIST.map((m,i)=>{const r=k[i]||{};return `<tr><td>${m}</td><td>${esc(r.goal||'')}</td><td>${esc(r.d1||'')}</td><td>${esc(r.w1||'')}</td><td>${esc(r.w2||'')}</td><td>${esc(r.d30||'')}</td></tr>`;}).join('')+'</table>';}
+    });});
+  });
+  return h;
+}
+// events for playbooks
+$('#main').addEventListener('input',e=>{
+  const el=e.target;const key=el.dataset.plan,f=el.dataset.f;if(!key||!f)return;
+  const v=Object.assign({},planData(key));
+  if(el.dataset.c!=null&&el.dataset.r!=null){const fld=PLANS[key].sections.flatMap(s=>s.fields).find(x=>x.id===f);const rows=planTable(key,f,fld.cols).map(r=>Object.assign({},r));rows[+el.dataset.r][el.dataset.c]=el.type==='checkbox'?el.checked:el.value;v[f]=rows;}
+  else if(el.dataset.i!=null){const st=Object.assign({},v[f]||{});st[el.dataset.i]=el.checked;v[f]=st;el.closest('.ck').classList.toggle('on',el.checked);const box=el.closest('.checks');const fld=PLANS[key].sections.flatMap(s=>s.fields).find(x=>x.id===f);box.querySelector('.checks-h').textContent=fld.items.filter((_,i)=>st[i]).length+'/'+fld.items.length+' done';}
+  else if(el.dataset.day!=null){const d=Object.assign({},v[f]||{});d[el.dataset.day]=el.value;v[f]=d;}
+  else if(el.dataset.s!=null){const s=Object.assign({},v[f]||{});s[el.dataset.s]=el.value;v[f]=s;const tot=AR_CRIT.reduce((a,_,i)=>a+Math.min(10,Math.max(0,parseFloat(s[i])||0)),0);const r=arRec(tot);const T=document.getElementById('arTot'),R=document.getElementById('arRec'),W=document.getElementById('arWhy');if(T){T.innerHTML=tot+'<small>/100</small>';R.textContent=r[0];R.className=tot>=70?'good':tot>=50?'':'bad';W.textContent=r[1];}}
+  else if(el.dataset.k!=null){const k=Object.assign({},v[f]||{});k[el.dataset.k]=Object.assign({},k[el.dataset.k]||{},{[el.dataset.c]:el.value});v[f]=k;}
+  else{v[f]=el.value;const c=document.querySelector(`[data-cnt="${f}"]`);if(c)c.textContent=el.value.length+'/'+el.maxLength;}
+  state.plans[key]=Object.assign({},state.plans[key]||{},{v});saveLocal();clearTimeout(planTimer);planTimer=setTimeout(()=>{writePlan(key,v);if(f==='lines'||f==='cap'||f==='entity')render();},700);
+});
+$('#main').addEventListener('click',e=>{
+  const nb=e.target.closest('[data-plan]:not([data-f])');
+  if(e.target.closest('.plan-nav button')){state.planKey=e.target.closest('button').dataset.plan;saveLocal();render();return;}
+  const add=e.target.closest('[data-rowadd]');if(add){const key=add.dataset.plan,f=add.dataset.rowadd;const v=Object.assign({},planData(key));v[f]=planTable(key,f).concat([{}]);writePlan(key,v);render();return;}
+  const del=e.target.closest('[data-rowdel]');if(del){const key=del.dataset.plan,f=del.dataset.rowdel;const v=Object.assign({},planData(key));const rows=planTable(key,f).slice();rows.splice(+del.dataset.r,1);v[f]=rows.length?rows:[{}];writePlan(key,v);render();return;}
+  const ex=e.target.closest('[data-planexport]');if(ex){planCSV(ex.dataset.planexport);return;}
+  const cl=e.target.closest('[data-planclear]');if(cl){if(!confirm('Clear this playbook for everyone?'))return;writePlan(cl.dataset.planclear,{},'cleared the '+PLANS[cl.dataset.planclear].name+' playbook');render();return;}
+});
+
+bindSettings();render();initSync();
+})();
+</script>
+
+</body>
+</html>
