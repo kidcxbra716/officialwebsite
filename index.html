@@ -240,6 +240,37 @@
   @media(min-width:769px) and (max-width:1100px){
     .product-grid{grid-template-columns:repeat(2, 1fr);}
   }
+  /* ===== EXIT-INTENT / SCROLL EMAIL CAPTURE POPUP ===== */
+  .kcx-popup-overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,.82);
+    display:flex; align-items:center; justify-content:center;
+    padding:20px; z-index:200; opacity:0; pointer-events:none; transition:opacity .25s ease;
+  }
+  .kcx-popup-overlay.is-visible{ opacity:1; pointer-events:auto; }
+  .kcx-popup{
+    position:relative; background:var(--panel); border:2px solid var(--red);
+    max-width:440px; width:100%; padding:40px 32px 32px; text-align:center;
+    transform:translateY(12px); transition:transform .25s ease;
+  }
+  .kcx-popup-overlay.is-visible .kcx-popup{ transform:translateY(0); }
+  .kcx-popup-close{
+    position:absolute; top:10px; right:12px; background:none; border:none;
+    color:var(--cream); font-size:26px; line-height:1; cursor:pointer; opacity:.65; padding:6px;
+  }
+  .kcx-popup-close:hover{ opacity:1; color:var(--red); }
+  .kcx-popup-eyebrow{
+    font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:3px; color:var(--yellow);
+    text-transform:uppercase; margin-bottom:14px; display:flex; align-items:center; justify-content:center; gap:10px;
+  }
+  .kcx-popup-eyebrow::before, .kcx-popup-eyebrow::after{ content:""; width:20px; height:1px; background:var(--yellow); }
+  .kcx-popup-title{ font-size:26px; text-transform:uppercase; font-weight:700; margin-bottom:10px; line-height:1.05; }
+  .kcx-popup-sub{ color:#d8d2c4; font-size:14px; line-height:1.6; font-weight:300; }
+  .kcx-popup .kit-form{ justify-content:center; margin-top:22px; }
+  .kcx-popup .fl-fine{ margin-top:12px; margin-bottom:0; }
+  @media(max-width:480px){
+    .kcx-popup{ padding:34px 22px 26px; }
+    .kcx-popup-title{ font-size:22px; }
+  }
 </style>
 </head>
 <body>
@@ -679,7 +710,7 @@
     <a href="https://www.youtube.com/@kidcxbra9544" target="_blank">YouTube</a>
     <a href="https://soundcloud.com/user-26233401" target="_blank">SoundCloud</a>
     <a href="https://www.facebook.com/profile.php?id=61592804669552" target="_blank">Facebook</a>
-    <a href="https://www.instagram.com/ilycxbra" target="_blank">Instagram</a>
+    <a href="https://www.instagram.com/cxbbrand" target="_blank">Instagram</a>
     <a href="https://linktr.ee/Kidcobra716" target="_blank">Linktree</a>
     <a href="#book">Book</a>
     <!-- PRESS KIT — upload the EPK PDF to the site (e.g. as epk.pdf in the
@@ -690,5 +721,87 @@
 <div style="text-align:center; padding:18px 20px; font-family:'JetBrains Mono',monospace; font-size:11px; color:#6a6a6a; border-top:1px solid var(--line);">
   &copy; 2026 Kid Cxbra&#8482;. All rights reserved. CXLD BLOODED&#8482; is a trademark of Kid Cxbra.
 </div>
+
+<!-- ============================================================
+     EXIT-INTENT / SCROLL EMAIL CAPTURE POPUP
+     Fires once per visitor (desktop: mouse leaves toward the tab bar;
+     mobile: after scrolling past ~55% of the page). Posts to the same
+     Kit form as "Get In Before It Drops" — set REPLACE_WITH_KIT_FORM_ID
+     once and both forms work. Won't re-show for 14 days after a close
+     or a submit (stored in localStorage, per browser).
+     ============================================================ -->
+<div id="kcxExitPopup" class="kcx-popup-overlay" aria-hidden="true">
+  <div class="kcx-popup" role="dialog" aria-modal="true" aria-labelledby="kcxPopupTitle">
+    <button type="button" class="kcx-popup-close" aria-label="Close">&times;</button>
+    <div class="kcx-popup-eyebrow">Before You Go</div>
+    <h3 id="kcxPopupTitle" class="kcx-popup-title">Get The Unreleased Track Free</h3>
+    <p class="kcx-popup-sub">New music, unreleased tracks, and merch restocks hit your inbox first — before Spotify, before socials, before anyone else.</p>
+    <!-- Same Kit form as #firstlisten — replace REPLACE_WITH_KIT_FORM_ID once, both forms use it.
+         The hidden "signup_source" field is optional: only add a matching custom field named
+         "signup_source" in Kit (Settings > Custom Fields) if you want to see which form each
+         subscriber came from — otherwise delete the hidden input below. -->
+    <form action="https://app.kit.com/forms/REPLACE_WITH_KIT_FORM_ID/subscriptions" method="post" class="kit-form">
+      <input type="email" name="email_address" placeholder="your@email.com" required aria-label="Email address">
+      <input type="hidden" name="fields[signup_source]" value="exit_popup">
+      <button type="submit" class="btn solid">Get The Track</button>
+    </form>
+    <div class="fl-fine">No spam. Unsubscribe whenever.</div>
+  </div>
+</div>
+<script>
+(function(){
+  var overlay = document.getElementById('kcxExitPopup');
+  if(!overlay) return;
+  var closeBtn = overlay.querySelector('.kcx-popup-close');
+  var form = overlay.querySelector('form');
+
+  var STORAGE_KEY = 'kcxExitPopupDismissedAt';
+  var DISMISS_DAYS = 14;   // how long to stay quiet after a close or submit
+  var MIN_TIME_MS = 8000;  // don't fire in the first 8 seconds on page
+  var SCROLL_TRIGGER = 0.55; // mobile fallback: fire after 55% scroll depth
+
+  var loadedAt = Date.now();
+  var shown = false;
+
+  function recentlyDismissed(){
+    var t = localStorage.getItem(STORAGE_KEY);
+    if(!t) return false;
+    var days = (Date.now() - parseInt(t, 10)) / 86400000;
+    return days < DISMISS_DAYS;
+  }
+
+  function showPopup(){
+    if(shown || recentlyDismissed()) return;
+    if(Date.now() - loadedAt < MIN_TIME_MS) return;
+    shown = true;
+    overlay.classList.add('is-visible');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function hidePopup(remember){
+    overlay.classList.remove('is-visible');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if(remember){ localStorage.setItem(STORAGE_KEY, Date.now().toString()); }
+  }
+
+  closeBtn.addEventListener('click', function(){ hidePopup(true); });
+  overlay.addEventListener('click', function(e){ if(e.target === overlay) hidePopup(true); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') hidePopup(true); });
+  form.addEventListener('submit', function(){ localStorage.setItem(STORAGE_KEY, Date.now().toString()); });
+
+  // Desktop — exit intent: mouse leaves toward the top of the viewport (tab/URL bar)
+  document.addEventListener('mouseout', function(e){
+    if(!e.relatedTarget && e.clientY <= 0){ showPopup(); }
+  });
+
+  // Mobile / fallback — scroll depth
+  window.addEventListener('scroll', function(){
+    var depth = (window.scrollY + window.innerHeight) / document.body.scrollHeight;
+    if(depth > SCROLL_TRIGGER){ showPopup(); }
+  }, { passive: true });
+})();
+</script>
 </body>
 </html>
