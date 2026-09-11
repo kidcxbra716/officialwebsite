@@ -99,6 +99,10 @@
   .mini-btn:hover{background:var(--cream); color:var(--bg);}
   .mini-btn.buy{background:var(--yellow); border-color:var(--yellow); color:var(--bg); font-weight:600;}
   .mini-btn.buy:hover{background:var(--cream); border-color:var(--cream);}
+  .mini-btn.tbd{
+    background:transparent; border:1px dashed #4a4a4a; color:#7a7a7a;
+    cursor:default; font-weight:600;
+  }
   /* Behind the Music - contact sheet gallery */
   .contact-sheet{display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--line);}
   .frame{background:var(--bg); aspect-ratio:3/4; position:relative; overflow:hidden; transition:transform .3s;}
@@ -203,6 +207,9 @@
   }
   .live-dot{width:7px; height:7px; border-radius:50%; background:var(--cream); animation:liveBlink 1.4s ease-in-out infinite;}
   @keyframes liveBlink{0%,100%{opacity:1;}50%{opacity:.25;}}
+  .live-badge-next{background:var(--panel); border:1px solid var(--yellow); color:var(--yellow);}
+  .live-badge-next .live-dot{display:none;}
+  .live-card-solo{max-width:640px; margin:0 auto;}
   .live-body{position:relative; z-index:2; padding:26px;}
   .live-title{font-size:28px; text-transform:uppercase; font-weight:700; margin-bottom:4px;}
   .live-meta{font-family:'JetBrains Mono',monospace; font-size:12px; color:#c9c9c9; margin-bottom:18px; letter-spacing:.5px;}
@@ -272,10 +279,7 @@
     .kcx-popup-title{ font-size:22px; }
   }
 </style>
-<link rel="icon" type="image/x-icon" href="/favicon.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"></head>
+</head>
 <body>
 <header>
   <div class="logo">KID <span>CXBRA</span><sup style="font-size:10px; opacity:0.6;">&#8482;</sup></div>
@@ -394,7 +398,7 @@
       <div class="track-price">$6.99</div>
       <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
         <a href="https://open.spotify.com/album/3xb5FhoeMmOat3UrNh0Ebh" target="_blank" class="mini-btn">Stream Free</a>
-        <a href="https://kidcxbra.gumroad.com/l/roty" target="_blank" class="mini-btn buy">Buy Download</a>
+        <span class="mini-btn tbd">TBD</span>
       </div>
     </div>
     <div class="track-card">
@@ -404,7 +408,7 @@
       <div class="track-price">$1.99</div>
       <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
         <a href="https://open.spotify.com/album/1h3PpI6UOTwnhlHkJNVrIV" target="_blank" class="mini-btn">Stream Free</a>
-        <a href="https://kidcxbra.gumroad.com/l/finewine" target="_blank" class="mini-btn buy">Buy Download</a>
+        <span class="mini-btn tbd">TBD</span>
       </div>
     </div>
     <div class="track-card">
@@ -414,7 +418,7 @@
       <div class="track-price">$1.99</div>
       <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
         <a href="https://open.spotify.com/album/1anLx0cI4SGuuv4AHfJER7" target="_blank" class="mini-btn">Stream Free</a>
-        <a href="https://kidcxbra.gumroad.com/l/bankroll304" target="_blank" class="mini-btn buy">Buy Download</a>
+        <span class="mini-btn tbd">TBD</span>
       </div>
     </div>
     <div class="track-card">
@@ -424,7 +428,7 @@
       <div class="track-price">$1.99</div>
       <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
         <a href="https://open.spotify.com/album/3UpyN05GfL1lv4R42qXh3V" target="_blank" class="mini-btn">Stream Free</a>
-        <a href="https://kidcxbra.gumroad.com/l/nodrank" target="_blank" class="mini-btn buy">Buy Download</a>
+        <span class="mini-btn tbd">TBD</span>
       </div>
     </div>
   </div>
@@ -445,72 +449,85 @@
 <section id="live">
   <div class="section-head">
     <h2>Kid Cxbra Live</h2>
-    <span class="tag">// TICKETED STREAMS &amp; FAN CHAT</span>
+    <span class="tag">// TICKETED STREAMS</span>
   </div>
-  <div class="live-grid">
-    <!-- LIVE / WATCH CARD -->
-    <div class="live-card">
-      <!-- // EDIT ME — drop a real looping clip here (mp4, muted, silent b-roll works great).
-           Uncomment the <source> line once you have one; until then the
-           animated red/yellow glow below plays automatically as a fallback. -->
-      <video class="live-bg-video" autoplay muted loop playsinline poster="images/gallery-live-crowd.jpg">
-        <!-- <source src="images/live-loop.mp4" type="video/mp4"> -->
-      </video>
-      <div class="live-bg-fallback"></div>
-      <div class="live-scrim"></div>
 
-      <!-- // EDIT ME — swap to "NEXT LIVE" + a date when you're offline -->
-      <span class="live-badge"><span class="live-dot"></span> Live</span>
+  <!-- ============================================================
+       LIVE STATUS — edit these 3 lines before/after you stream.
+       Everything below (badge, button text, Now Playing) updates
+       itself from this one block, so you never have to hunt through
+       the markup mid-show.
+       ============================================================ -->
+  <script>
+    var KCX_LIVE_STATUS = {
+      isLive: false,                        // // EDIT ME — set true only while you're actually streaming
+      nextDate: "Date TBD",                  // // EDIT ME — shown when isLive is false
+      nowPlaying: "fine wine",               // // EDIT ME — only shown while isLive is true
+      watchUrl: "https://www.youtube.com/@kidcxbra9544/live",  // // EDIT ME — your real live URL
+      ticketText: "Watch Live — $5 Ticket"   // // EDIT ME — CTA shown only while isLive is true
+    };
+  </script>
 
-      <div class="live-body">
-        <div class="live-title">Studio Session — Live</div>
-        <div class="live-meta">FREE FOR THE EMAIL LIST · PHILADELPHIA, PA</div>
+  <div class="live-card live-card-solo">
+    <!-- // EDIT ME — drop a real looping clip here (mp4, muted, silent b-roll works great).
+         Uncomment the <source> line once you have one; until then the
+         animated red/yellow glow below plays automatically as a fallback. -->
+    <video class="live-bg-video" autoplay muted loop playsinline poster="images/gallery-live-crowd.jpg">
+      <!-- <source src="images/live-loop.mp4" type="video/mp4"> -->
+    </video>
+    <div class="live-bg-fallback"></div>
+    <div class="live-scrim"></div>
 
-        <div class="now-playing">
-          <div>
-            <div class="now-playing-label">Now Playing</div>
-            <div class="now-playing-song">fine wine</div>
-          </div>
-          <a href="https://kidcxbra.gumroad.com/l/finewine" target="_blank" class="mini-btn buy">Buy This Song</a>
+    <!-- Badge, title, Now Playing, and the CTA button all fill in from KCX_LIVE_STATUS via the script at the bottom of this section. -->
+    <span id="kcxLiveBadge" class="live-badge"><span class="live-dot"></span> Live</span>
+
+    <div class="live-body">
+      <div id="kcxLiveTitle" class="live-title">Studio Session — Live</div>
+      <div class="live-meta">FREE FOR THE EMAIL LIST · PHILADELPHIA, PA</div>
+
+      <div id="kcxNowPlaying" class="now-playing">
+        <div>
+          <div class="now-playing-label">Now Playing</div>
+          <div id="kcxNowPlayingSong" class="now-playing-song">fine wine</div>
         </div>
+        <span class="mini-btn tbd">TBD</span>
+      </div>
 
-        <div class="live-ctas">
-          <!-- // EDIT ME — point this at your real live URL (YouTube Live / Instagram Live / Twitch) -->
-          <a href="https://www.youtube.com/@kidcxbra9544/live" target="_blank" class="btn solid">Watch Live — $5 Ticket</a>
-        </div>
-        <div class="ticket-note">On the email list? You're already in — check your inbox for the free link.</div>
+      <div class="live-ctas">
+        <a id="kcxWatchBtn" href="https://www.youtube.com/@kidcxbra9544/live" target="_blank" class="btn solid">Watch Live — $5 Ticket</a>
       </div>
-    </div>
-
-    <!-- FAN CHAT -->
-    <div class="chat-card">
-      <div class="chat-head">
-        <h3>Fan Chat</h3>
-        <span class="chat-count">Live during streams</span>
-      </div>
-      <div class="chat-body">
-        <!--
-          // EDIT ME — free group chat via Chatango:
-          1. Create a free group at chatango.com (2 minutes, no coding)
-          2. Replace "kidcxbrafans" below with your real group handle
-          3. Delete the .chat-fallback div once it's live
-        -->
-        <div id="chatango-widget"></div>
-        <script
-          id="cid_kidcxbra_chat"
-          data-cfasync="false"
-          async
-          src="https://st.chatango.com/js/gz/emb.js"
-          style="width:100%; height:100%;">
-          { "handle":"kidcxbrafans","arch":"js","styles":{"a":"e42313","b":100,"c":"0d0d0d","d":"e42313","k":"f5f0e6","l":"e42313","m":"f5f0e6","p":"10","q":"f5f0e6","t":0,"fwtickm":1} }
-        </script>
-        <div class="chat-fallback">
-          Fan chat loads once your Chatango group is live — swap "kidcxbrafans" in the code
-          above for your real group handle from chatango.com.
-        </div>
-      </div>
+      <div id="kcxTicketNote" class="ticket-note">On the email list? You're already in — check your inbox for the free link.</div>
+      <div class="ticket-note">Live chat happens right on YouTube during the stream — it shows up under the video automatically once you're live.</div>
     </div>
   </div>
+
+  <script>
+  (function(){
+    var s = window.KCX_LIVE_STATUS || {};
+    var badge = document.getElementById('kcxLiveBadge');
+    var nowPlaying = document.getElementById('kcxNowPlaying');
+    var nowPlayingSong = document.getElementById('kcxNowPlayingSong');
+    var watchBtn = document.getElementById('kcxWatchBtn');
+    var ticketNote = document.getElementById('kcxTicketNote');
+
+    if(s.isLive){
+      badge.innerHTML = '<span class="live-dot"></span> Live';
+      badge.classList.remove('live-badge-next');
+      nowPlaying.style.display = '';
+      nowPlayingSong.textContent = s.nowPlaying || '';
+      watchBtn.textContent = s.ticketText || 'Watch Live';
+      watchBtn.href = s.watchUrl || '#';
+      ticketNote.textContent = "On the email list? You're already in — check your inbox for the free link.";
+    } else {
+      badge.innerHTML = 'Next Live — ' + (s.nextDate || 'TBD');
+      badge.classList.add('live-badge-next');
+      nowPlaying.style.display = 'none';
+      watchBtn.textContent = 'Get Notified';
+      watchBtn.href = '#firstlisten';
+      ticketNote.textContent = "Not live right now — join the email list above and you'll get the link the moment a stream goes up.";
+    }
+  })();
+  </script>
 </section>
 <section id="gallery">
   <div class="section-head">
@@ -564,7 +581,7 @@
         <h4>Embroidered Hoodie</h4>
         <div class="prow">
           <span class="pprice">$88.00</span>
-          <a href="https://kidcxbra.gumroad.com/l/cxldblooded-hoodie" target="_blank" class="mini-btn buy">Buy Now</a>
+          <span class="mini-btn tbd">TBD</span>
         </div>
       </div>
     </div>
@@ -575,7 +592,7 @@
         <h4>Embroidered Sweatpants</h4>
         <div class="prow">
           <span class="pprice">$68.00</span>
-          <a href="https://kidcxbra.gumroad.com/l/cxldblooded-sweatpants" target="_blank" class="mini-btn buy">Buy Now</a>
+          <span class="mini-btn tbd">TBD</span>
         </div>
       </div>
     </div>
@@ -586,7 +603,7 @@
         <h4>Snapback Cap</h4>
         <div class="prow">
           <span class="pprice">$30.00</span>
-          <a href="https://kidcxbra.gumroad.com/l/cxldblooded-snapback" target="_blank" class="mini-btn buy">Buy Now</a>
+          <span class="mini-btn tbd">TBD</span>
         </div>
       </div>
     </div>
@@ -597,7 +614,7 @@
         <h4>Knit Beanie</h4>
         <div class="prow">
           <span class="pprice">$34.00</span>
-          <a href="https://kidcxbra.gumroad.com/l/cxldblooded-beanie" target="_blank" class="mini-btn buy">Buy Now</a>
+          <span class="mini-btn tbd">TBD</span>
         </div>
       </div>
     </div>
@@ -608,7 +625,7 @@
         <h4>Crewneck Sweatshirt</h4>
         <div class="prow">
           <span class="pprice">$62.00</span>
-          <a href="https://kidcxbra.gumroad.com/l/cxb-crewneck" target="_blank" class="mini-btn buy">Buy Now</a>
+          <span class="mini-btn tbd">TBD</span>
         </div>
       </div>
     </div>
@@ -619,7 +636,7 @@
         <h4>T-Shirt</h4>
         <div class="prow">
           <span class="pprice">$38.00</span>
-          <a href="https://kidcxbra.gumroad.com/l/cxb-tshirt" target="_blank" class="mini-btn buy">Buy Now</a>
+          <span class="mini-btn tbd">TBD</span>
         </div>
       </div>
     </div>
@@ -630,7 +647,7 @@
         <h4>Bomber Jacket</h4>
         <div class="prow">
           <span class="pprice">$128.00</span>
-          <a href="https://kidcxbra.gumroad.com/l/cxb-jacket" target="_blank" class="mini-btn buy">Buy Now</a>
+          <span class="mini-btn tbd">TBD</span>
         </div>
       </div>
     </div>
@@ -641,7 +658,7 @@
         <h4>Pullover Hoodie</h4>
         <div class="prow">
           <span class="pprice">$68.00</span>
-          <a href="https://kidcxbra.gumroad.com/l/cxb-pullover" target="_blank" class="mini-btn buy">Buy Now</a>
+          <span class="mini-btn tbd">TBD</span>
         </div>
       </div>
     </div>
